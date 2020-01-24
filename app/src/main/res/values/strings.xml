@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TE_Scheduler_C196</string>
+    <string name="all_terms">All Terms</string>
+    <string name="all_courses">All Courses</string>
+    <string name="assessments">Assessments</string>
+    <string name="all_mentors">All Mentors</string>
+    <string name="empty_database">Empty Database</string>
+</resources>

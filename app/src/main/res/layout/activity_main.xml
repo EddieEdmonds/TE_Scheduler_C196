@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:minHeight="100dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/transparent"
+        android:background="@color/transparent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageButton
+                android:id="@+id/btn_term"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryLight" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/term_icon"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_term_icon"
+                android:tint="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/term_icon"
+                android:layout_toRightOf="@id/term_icon"
+                android:text="@string/all_terms"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end">
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_white_circle"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp">
+                <TextView
+                    android:id="@+id/term_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/black"
+        android:minHeight="100dp"
+        app:cardCornerRadius="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageButton
+                android:id="@+id/btn_course"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryLight" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/course_icon"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_course_icon"
+                android:tint="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/course_icon"
+                android:layout_toRightOf="@id/course_icon"
+                android:text="@string/all_courses"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end">
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_white_circle"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp">
+                <TextView
+                    android:id="@+id/course_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="230dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/black"
+        android:minHeight="100dp"
+        app:cardCornerRadius="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageButton
+                android:id="@+id/btn_assessments"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryLight" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/assessments_icon"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_assessment_icon"
+                android:tint="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/assessments_icon"
+                android:layout_toRightOf="@id/assessments_icon"
+                android:text="@string/assessments"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end">
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_white_circle"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp">
+                <TextView
+                    android:id="@+id/ass_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/black"
+        android:minHeight="100dp"
+        app:cardCornerRadius="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageButton
+                android:id="@+id/btn_mentors"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryLight" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/mentor_icon"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_mentor_icon"
+                android:tint="@color/colorPrimaryDark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/mentor_icon"
+                android:layout_toRightOf="@id/mentor_icon"
+                android:text="@string/all_mentors"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end">
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_white_circle"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp">
+                <TextView
+                    android:id="@+id/mentor_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:id="@+id/btn_emptyDatabase"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/transparent"
+            android:background="@color/colorPrimaryLight" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:paddingBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/empty_database"
+                android:textColor="@color/white"
+                android:textSize="35sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
