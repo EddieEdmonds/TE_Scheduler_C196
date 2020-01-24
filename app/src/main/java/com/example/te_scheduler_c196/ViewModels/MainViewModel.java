@@ -12,6 +12,7 @@ import com.example.te_scheduler_c196.DB_Entities.Mentor;
 import com.example.te_scheduler_c196.DB_Entities.Note;
 import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Database.AppRepository;
+import com.example.te_scheduler_c196.Utility.PopulateDb;
 
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class MainViewModel extends AndroidViewModel {
     public void emptyDatabase(){
         repository.emptyDatabase();
     }
+
     public LiveData<List<Term>> getAllTerms(){
         return allTerms;
     }

@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -328,8 +330,8 @@
 
 
     <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
@@ -343,20 +345,23 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:paddingBottom="10dp"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal|center_vertical"
                 android:background="@color/colorPrimaryDark"
                 android:text="@string/empty_database"
                 android:textColor="@color/white"
                 android:textSize="35sp" />
         </RelativeLayout>
+
+
+
+
+
 
     </RelativeLayout>
 

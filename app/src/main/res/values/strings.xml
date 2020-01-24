@@ -5,4 +5,5 @@
     <string name="assessments">Assessments</string>
     <string name="all_mentors">All Mentors</string>
     <string name="empty_database">Empty Database</string>
+    <string name="filler">Filler Text</string>
 </resources>

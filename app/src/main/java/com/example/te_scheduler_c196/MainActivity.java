@@ -29,10 +29,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mainViewModel;
-    private LiveData<List<Term>> allTerms;
+
+    //Grabs the count of each table from the DB. There is a getNoteCount()
+    // in the appRepository if needed elsewhere.
     private LiveData<Integer> termCount;
     private LiveData<Integer> courseCount;
-    private LiveData<Integer> noteCount;
     private LiveData<Integer> mentorCount;
     private LiveData<Integer> assCount;
 
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         termCount = mainViewModel.getTermCount();
         courseCount = mainViewModel.getCourseCount();
         assCount = mainViewModel.getAssCount();
-        noteCount = mainViewModel.getNoteCount();
         mentorCount = mainViewModel.getMentorCount();
 
         //Initialize "count" text views on main screen.
@@ -68,13 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
         emptyDbButton = findViewById(R.id.btn_emptyDatabase);
 
-        emptyDbButton.setOnClickListener(emptyDbListener);
+        if(emptyDbButton!=null){
+            emptyDbButton.setOnClickListener(emptyDbListener);
+        }
+
 
         ObserveItems();
     }
-
-
-
 
 
     private void ObserveItems() {
