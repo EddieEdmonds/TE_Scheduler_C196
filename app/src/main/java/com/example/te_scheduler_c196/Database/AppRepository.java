@@ -1,8 +1,11 @@
 package com.example.te_scheduler_c196.Database;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
@@ -11,6 +14,7 @@ import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.DB_Entities.Mentor;
 import com.example.te_scheduler_c196.DB_Entities.Note;
 import com.example.te_scheduler_c196.DB_Entities.Term;
+import com.example.te_scheduler_c196.MainActivity;
 import com.example.te_scheduler_c196.Utility.PopulateDb;
 
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class AppRepository {
+    private static final String TAG = AppRepository.class.getSimpleName();
+
     private AssDao assDao;
     private CourseDao courseDao;
     private MentorDao mentorDao;
@@ -77,11 +83,17 @@ public class AppRepository {
     //Clear database
     public void emptyDatabase() {
         //theoretically, calling each of the "deleteAll" AsyncTasks at one time should empty the DB.
-        new DeleteAllAssessmentsAsyncTask(assDao).execute();
-        new DeleteAllNotesAsyncTask(noteDao).execute();
-        new DeleteAllMentorsAsyncTask(mentorDao).execute();
-        new DeleteAllTermsAsyncTask(termDao).execute();
-        new DeleteAllCoursesAsyncTask(courseDao).execute();
+        try {
+            new DeleteAllAssessmentsAsyncTask(assDao).execute();
+            new DeleteAllNotesAsyncTask(noteDao).execute();
+            new DeleteAllMentorsAsyncTask(mentorDao).execute();
+            new DeleteAllTermsAsyncTask(termDao).execute();
+            new DeleteAllCoursesAsyncTask(courseDao).execute();
+            new DeleteAllCoursesAsyncTask(courseDao).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "test catch");
+        }
     }
 
     //////Assessment modifications accessible by the rest of the app.
@@ -213,7 +225,7 @@ public class AppRepository {
 
 
     //Async tasks for the above public interface.
-    //Async task for Assessment modifications. 
+//////Async task for Assessment modifications.
     private static class InsertAssessmentAsyncTask extends AsyncTask<Assessment, Void, Void> {
         private AssDao assDao;
 
@@ -269,12 +281,17 @@ public class AppRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            assDao.deleteAllAssessments();
+            try {
+                assDao.deleteAllAssessments();
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+                Log.e(TAG, "DeleteAllAssessments failed");
+            }
             return null;
         }
     }
 
-    //Async tasks for Course modifications
+/////Async tasks for Course modifications
     private static class InsertCourseAsyncTask extends AsyncTask<Course, Void, Void> {
         private CourseDao courseDao;
 
@@ -326,12 +343,17 @@ public class AppRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            courseDao.deleteAllCourses();
+            try {
+                courseDao.deleteAllCourses();
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+                Log.e(TAG, "DeleteAllCourses failed");
+            }
             return null;
         }
     }
 
-    //Async tasks for Mentor modifications
+/////Async tasks for Mentor modifications
     private static class InsertMentorAsyncTask extends AsyncTask<Mentor, Void, Void> {
         private MentorDao mentorDao;
 
@@ -383,12 +405,17 @@ public class AppRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            mentorDao.deleteAllMentors();
+            try {
+                mentorDao.deleteAllMentors();
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+                Log.e(TAG, "DeleteAllMentors failed");
+            }
             return null;
         }
     }
 
-    //Async tasks for Note modifications
+/////Async tasks for Note modifications
     private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void> {
         private NoteDao noteDao;
 
@@ -433,19 +460,23 @@ public class AppRepository {
 
     public static class DeleteAllNotesAsyncTask extends AsyncTask<Void, Void, Void> {
         private NoteDao noteDao;
-
         private DeleteAllNotesAsyncTask(NoteDao noteDao) {
             this.noteDao = noteDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            noteDao.deleteAllNotes();
+            try {
+                noteDao.deleteAllNotes();
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+                Log.e(TAG, "DeleteAllNotes failed");
+            }
             return null;
         }
     }
 
-    //Async tasks for Term modifications
+/////Async tasks for Term modifications
     private static class CountTermsAsyncTask extends AsyncTask<Void, Void, Void> {
         private TermDao termDao;
 
@@ -502,16 +533,22 @@ public class AppRepository {
         }
     }
 
+
+
     public static class DeleteAllTermsAsyncTask extends AsyncTask<Void, Void, Void> {
         private TermDao termDao;
-
         private DeleteAllTermsAsyncTask(TermDao termDao) {
             this.termDao = termDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            termDao.deleteAllTerms();
+            try {
+                termDao.deleteAllTerms();
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+                Log.e(TAG, "Delete Failed");
+            }
             return null;
         }
     }

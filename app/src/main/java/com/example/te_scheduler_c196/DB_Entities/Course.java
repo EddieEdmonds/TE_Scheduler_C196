@@ -1,5 +1,6 @@
 package com.example.te_scheduler_c196.DB_Entities;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -12,8 +13,8 @@ import static androidx.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "course_table",
         foreignKeys = {
-                @ForeignKey(entity = Term.class, parentColumns = "term_id", childColumns = "fk_term_id", onDelete = RESTRICT),
-                @ForeignKey(entity = Mentor.class, parentColumns = "mentor_id", childColumns = "fk_mentor_id", onDelete = CASCADE)
+                @ForeignKey(entity = Term.class, parentColumns = "term_id", childColumns = "fk_term_id", onDelete = SET_NULL),
+                @ForeignKey(entity = Mentor.class, parentColumns = "mentor_id", childColumns = "fk_mentor_id", onDelete = SET_NULL)
         })
 
 public class Course {
@@ -25,12 +26,12 @@ public class Course {
     private Date course_end;
     private String course_status;
 
-    private int fk_term_id;
-    private int fk_mentor_id;
+    private Integer fk_term_id;
+    private Integer fk_mentor_id;
 
 
 
-    public Course(String course_title, Date course_start, Date course_end, String course_status, int fk_term_id, int fk_mentor_id) {
+    public Course(String course_title, Date course_start, Date course_end, String course_status, Integer fk_term_id, Integer fk_mentor_id) {
         this.course_title = course_title;
         this.course_start = course_start;
         this.course_end = course_end;
@@ -63,11 +64,11 @@ public class Course {
         return course_status;
     }
 
-    public int getFk_term_id() {
+    public Integer getFk_term_id() {
         return fk_term_id;
     }
 
-    public int getFk_mentor_id() {
+    public Integer getFk_mentor_id() {
         return fk_mentor_id;
     }
 }

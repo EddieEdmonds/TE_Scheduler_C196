@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
-                android:background="@color/colorPrimaryLight" />
+                android:background="@color/colorPrimaryLight"
+                android:onClick="launchTerms"/>
 
         </RelativeLayout>
 
@@ -338,10 +339,11 @@
         <ImageButton
             android:id="@+id/btn_emptyDatabase"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_gravity="bottom"
-            android:backgroundTint="@color/transparent"
-            android:background="@color/colorPrimaryLight" />
+            android:background="@color/colorPrimaryLight"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/transparent" />
 
         <RelativeLayout
             android:layout_width="match_parent"

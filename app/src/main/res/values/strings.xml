@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">TE_Scheduler_C196</string>
+    <string name="app_name">Self School Scheduler</string>
+    <string name="term_page_name">Your Terms</string>
     <string name="all_terms">All Terms</string>
     <string name="all_courses">All Courses</string>
     <string name="assessments">Assessments</string>

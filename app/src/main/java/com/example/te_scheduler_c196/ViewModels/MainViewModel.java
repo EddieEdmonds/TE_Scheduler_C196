@@ -1,6 +1,7 @@
 package com.example.te_scheduler_c196.ViewModels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,11 +13,14 @@ import com.example.te_scheduler_c196.DB_Entities.Mentor;
 import com.example.te_scheduler_c196.DB_Entities.Note;
 import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Database.AppRepository;
+import com.example.te_scheduler_c196.MainActivity;
 import com.example.te_scheduler_c196.Utility.PopulateDb;
 
 import java.util.List;
 
 public class MainViewModel extends AndroidViewModel {
+    private static final String LOG_TAG = MainViewModel.class.getSimpleName();
+
     private AppRepository repository;
     private LiveData<List<Term>> allTerms;
     private LiveData<List<Course>> allCourses;
@@ -49,7 +53,12 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void emptyDatabase(){
-        repository.emptyDatabase();
+        try {
+            repository.emptyDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, "test catch");
+        }
     }
 
     public LiveData<List<Term>> getAllTerms(){
