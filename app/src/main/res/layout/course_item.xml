@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/textView_course_title"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="top"
+            android:text="@string/filler"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/course_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_course_title"
+            android:text="@string/course_term"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/textView_course_term_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fillerTerm"
+            android:layout_below="@id/textView_course_title"
+            android:layout_toRightOf="@id/course_term"
+            android:layout_toEndOf="@id/course_term"
+            android:textSize="20sp"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="1dp"
+            android:paddingRight="1dp"/>
+
+
+        <TextView
+            android:id="@+id/courseStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/course_start"
+            android:textSize="20sp"
+            android:layout_below="@id/course_term"/>
+        <TextView
+            android:id="@+id/textView_course_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dateFiller"
+            android:layout_below="@id/course_term"
+            android:layout_toRightOf="@id/courseStart"
+            android:layout_toEndOf="@id/courseStart"
+            android:paddingLeft="8dp"
+            android:textSize="20sp"
+            android:paddingStart="8dp"
+            android:paddingEnd="1dp"
+            android:paddingRight="1dp" />
+
+        <TextView
+            android:id="@+id/courseEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/course_end"
+            android:textSize="20sp"
+            android:layout_below="@id/courseStart"/>
+        <TextView
+            android:id="@+id/textView_course_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dateFiller"
+            android:layout_below="@id/courseStart"
+            android:layout_toRightOf="@id/courseStart"
+            android:layout_toEndOf="@id/courseStart"
+            android:textSize="20sp"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="1dp"
+            android:paddingRight="1dp"/>
+
+<!--        android:layout_toEndOf="@id/textView_course_title"
+            android:layout_toRightOf="@id/textView_course_title" -->
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

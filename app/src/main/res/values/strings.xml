@@ -7,4 +7,9 @@
     <string name="all_mentors">All Mentors</string>
     <string name="empty_database">Empty Database</string>
     <string name="filler">Filler Text</string>
+    <string name="course_term">Term:</string>
+    <string name="course_start">Course Start: </string>
+    <string name="dateFiller">1/1/20</string>
+    <string name="course_end">Course End: </string>
+    <string name="fillerTerm">1</string>
 </resources>

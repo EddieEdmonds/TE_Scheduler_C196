@@ -18,7 +18,6 @@ import com.example.te_scheduler_c196.ViewModels.TermViewModel;
 import java.util.List;
 
 public class TermActivity extends AppCompatActivity {
-    private TermViewModel termViewModel;
     private LiveData<List<Term>> allTerms;
 
     @Override
@@ -33,7 +32,7 @@ public class TermActivity extends AppCompatActivity {
         final TermAdapter termAdapter = new TermAdapter();
         termRecyclerView.setAdapter(termAdapter);
 
-        termViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
+        TermViewModel termViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
         termViewModel.getAllTerms().observe(this, new Observer<List<Term>>() {
             @Override
             public void onChanged(List<Term> termList) {
@@ -42,8 +41,4 @@ public class TermActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 }

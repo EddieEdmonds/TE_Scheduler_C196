@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
- <!--********Main Activity********-->
+        <!-- ********Main Activity******** -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +21,26 @@
             </intent-filter>
         </activity>
 
-<!--********Term Activity********-->
-        <activity android:name=".TermActivity"
+        <!-- ********Term Activity******** -->
+        <activity
+            android:name=".TermActivity"
             android:label="@string/term_page_name"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="PARENT_ACTIVITY"
+                android:value="com.example.te_scheduler_c196.MainActivity" />
+        </activity>
+
+        <!--********Course Activity********-->
+        <activity
+            android:name=".CourseActivity"
+            android:label="Your Courses"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
                 android:value="com.example.te_scheduler_c196.MainActivity"/>
+
+
         </activity>
     </application>
 

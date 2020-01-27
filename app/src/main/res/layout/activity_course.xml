@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TermActivity">
+    tools:context=".CourseActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,17 +15,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--tools:listitem is only used for the preview window while developing.
-             Has nothing to do with actual functionality of the app.-->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/term_recycler_view"
+                android:id="@+id/course_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_anchorGravity="center"
-                tools:listitem="@layout/term_item" />
-
-
+                tools:listitem="@layout/course_item" />
         </RelativeLayout>
+
 
     </ScrollView>
 
@@ -37,5 +34,6 @@
         android:layout_margin="32dp"
         android:background="@color/colorPrimaryLight"
         android:src="@drawable/ic_add" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

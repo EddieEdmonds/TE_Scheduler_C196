@@ -12,7 +12,7 @@ import com.example.te_scheduler_c196.Database.AppRepository;
 import java.util.List;
 
 public class TermViewModel extends AndroidViewModel {
-    AppRepository repository;
+    private AppRepository repository;
     private LiveData<List<Term>> allTerms;
 
     public TermViewModel(@NonNull Application application) {

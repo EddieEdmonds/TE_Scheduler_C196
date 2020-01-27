@@ -185,4 +185,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Term Clicked", Toast.LENGTH_SHORT).show();
         Log.d(LOG_TAG, "Term clicked");
     }
+
+    public void launchCourses(View view){
+        Intent intent = new Intent (this, CourseActivity.class);
+        startActivity(intent);
+
+        Toast.makeText(this, "Courses Clicked", Toast.LENGTH_SHORT).show();
+        Log.d(LOG_TAG, "Course clicked");
+    }
 }
