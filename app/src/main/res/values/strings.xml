@@ -22,5 +22,6 @@
     <string name="email">Email:</string>
     <string name="term_title">Term Title</string>
     <string name="start_date">Start Date: </string>
-    <string name="select_start_date">Select Start Date</string>
+    <string name="select_start_date">Click to Select Start Date</string>
+    <string name="select_end_date">Click to Select End Date</string>
 </resources>

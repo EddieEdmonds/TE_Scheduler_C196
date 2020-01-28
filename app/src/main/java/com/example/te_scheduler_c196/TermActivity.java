@@ -49,6 +49,6 @@ public class TermActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddTermActivity.class);
         startActivity(intent);
 
-        Toast.makeText(this, "Assessments Clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Add Term Clicked", Toast.LENGTH_SHORT).show();
     }
 }

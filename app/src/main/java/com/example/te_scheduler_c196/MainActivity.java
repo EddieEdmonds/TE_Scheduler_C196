@@ -33,7 +33,7 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private MainViewModel mainViewModel;
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Database Emptied", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e(LOG_TAG, "test catch");
+                Log.e(TAG, "test catch");
             }
         }
     };
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Toast.makeText(this, "Term Clicked", Toast.LENGTH_SHORT).show();
-        Log.d(LOG_TAG, "Term clicked");
+        Log.d(TAG, "Term clicked");
     }
 
     public void launchCourses(View view){
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         Toast.makeText(this, "Courses Clicked", Toast.LENGTH_SHORT).show();
-        Log.d(LOG_TAG, "Course clicked");
+        Log.d(TAG, "Course clicked");
     }
 
     public void launchAss(View view){
