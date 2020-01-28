@@ -40,5 +40,4 @@ public interface MentorDao {
 
     @Query("SELECT COUNT(*) FROM mentor_table")
     LiveData<Integer> getMentorCount();
-
 }

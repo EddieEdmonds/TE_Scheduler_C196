@@ -19,9 +19,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- ********Term Activity******** -->
+        </activity> <!-- ********Term Activity******** -->
         <activity
             android:name=".TermActivity"
             android:label="@string/term_page_name"
@@ -29,17 +27,38 @@
             <meta-data
                 android:name="PARENT_ACTIVITY"
                 android:value="com.example.te_scheduler_c196.MainActivity" />
-        </activity>
-
-        <!--********Course Activity********-->
+        </activity> <!-- ********Course Activity******** -->
         <activity
             android:name=".CourseActivity"
             android:label="Your Courses"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="PARENT_ACTIVITY"
-                android:value="com.example.te_scheduler_c196.MainActivity"/>
-
+                android:value="com.example.te_scheduler_c196.MainActivity" />
+        </activity> <!-- ********Assessment Activity******** -->
+        <activity
+            android:name=".AssessmentActivity"
+            android:label="Your Assessments"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
+                android:value="com.example.te_scheduler_c196.MainActivity" />
+        </activity> <!-- ********Mentor Activity******** -->
+        <activity
+            android:name=".MentorActivity"
+            android:label="Your Mentors"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
+                android:value="com.example.te_scheduler_c196.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AddTermActivity"
+            android:label="Add Term"
+            android:parentActivityName=".TermActivity">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
+                android:value="com.example.te_scheduler_c196.TermActivity"/>
 
         </activity>
     </application>

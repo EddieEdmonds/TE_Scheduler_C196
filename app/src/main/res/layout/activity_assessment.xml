@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TermActivity">
+    tools:context=".AssessmentActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,11 +18,11 @@
             <!--tools:listitem is only used for the preview window while developing.
              Has nothing to do with actual functionality of the app.-->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/term_recycler_view"
+                android:id="@+id/assessment_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_anchorGravity="center"
-                tools:listitem="@layout/term_item" />
+                tools:listitem="@layout/assessment_item" />
 
 
         </RelativeLayout>
@@ -36,10 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="32dp"
-        android:background="@color/colorPrimary"
-        app:backgroundTint="@color/colorPrimaryLight"
-        app:rippleColor="@color/colorPrimaryDark"
-        android:src="@drawable/ic_add"
-        android:onClick="launchAddTerm"/>
+        android:background="@color/colorPrimaryLight"
+        android:src="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

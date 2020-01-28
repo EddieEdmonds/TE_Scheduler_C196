@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.te_scheduler_c196.DB_Entities.Course;
+import com.example.te_scheduler_c196.DB_Entities.Note;
 
 import java.util.List;
 
@@ -34,7 +35,9 @@ public interface CourseDao {
     @Query("SELECT * FROM course_table WHERE fk_term_id = :termId")
     LiveData<List<Course>> getCoursesForTerm(final int termId);
 
+    @Query("SELECT course_id, course_title FROM course_table where fk_mentor_id = :mentorId")
+    List<Course> getCourseTitleOnMentor(final int mentorId);
+
     @Query("SELECT COUNT(*) FROM course_table")
     LiveData<Integer> getCourseCount();
-
 }

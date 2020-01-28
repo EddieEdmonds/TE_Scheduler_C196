@@ -193,4 +193,18 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Courses Clicked", Toast.LENGTH_SHORT).show();
         Log.d(LOG_TAG, "Course clicked");
     }
+
+    public void launchAss(View view){
+        Intent intent = new Intent(this, AssessmentActivity.class);
+        startActivity(intent);
+
+        Toast.makeText(this, "Assessments Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void launchMentors(View view){
+        Intent intent = new Intent(this, MentorActivity.class);
+        startActivity(intent);
+
+        Toast.makeText(this, "Mentors Clicked", Toast.LENGTH_SHORT).show();
+    }
 }

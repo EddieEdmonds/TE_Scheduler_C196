@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/textView_ass_title"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="top"
+            android:text="@string/filler"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="30sp" />
+
+
+
+
+        <TextView
+            android:id="@+id/ass_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ass_due_date"
+            android:textSize="20sp"
+            android:layout_below="@id/textView_ass_title"/>
+        <TextView
+            android:id="@+id/textView_ass_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dateFiller"
+            android:layout_below="@id/textView_ass_title"
+            android:layout_toRightOf="@id/ass_due_date"
+            android:layout_toEndOf="@id/ass_due_date"
+            android:paddingLeft="8dp"
+            android:textSize="20sp"
+            android:paddingStart="8dp"
+            android:paddingEnd="1dp"
+            android:paddingRight="1dp" />
+
+        <TextView
+            android:id="@+id/ass_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/assessment_type"
+            android:textSize="20sp"
+            android:layout_below="@id/ass_due_date"/>
+        <TextView
+            android:id="@+id/textView_ass_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ass_types"
+            android:layout_below="@id/ass_due_date"
+            android:layout_toRightOf="@id/ass_type"
+            android:layout_toEndOf="@id/ass_type"
+            android:textSize="20sp"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="1dp"
+            android:paddingRight="1dp"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/ass_course_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/course"-->
+<!--            android:textSize="20sp"-->
+<!--            android:layout_below="@id/ass_type"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/textView_ass_course_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/course"-->
+<!--            android:layout_below="@id/ass_type"-->
+<!--            android:layout_toRightOf="@id/ass_course_title"-->
+<!--            android:layout_toEndOf="@id/ass_course_title"-->
+<!--            android:textSize="20sp"-->
+<!--            android:paddingLeft="8dp"-->
+<!--            android:paddingStart="8dp"-->
+<!--            android:paddingEnd="1dp"-->
+<!--            android:paddingRight="1dp"/>-->
+
+
+        <!--        android:layout_toEndOf="@id/textView_course_title"
+                    android:layout_toRightOf="@id/textView_course_title" -->
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

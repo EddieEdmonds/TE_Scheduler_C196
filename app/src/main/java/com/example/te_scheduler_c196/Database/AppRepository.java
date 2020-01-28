@@ -44,6 +44,8 @@ public class AppRepository {
     private LiveData<List<Note>> allNotes;
     private LiveData<List<Term>> allTerms;
 
+    private String courseTitle;
+
 
     public AppRepository(Application application) {
         database = AppDatabase.getInstance(application);
@@ -66,8 +68,6 @@ public class AppRepository {
         mentorCount = mentorDao.getMentorCount();
         noteCount = noteDao.getNoteCount();
         termCount = termDao.getTermCount();
-
-
     }
 
 //////Public facing "API" to be used outside the repository and ROOM setup.
@@ -122,6 +122,10 @@ public class AppRepository {
         return assCount;
     }
 
+    public LiveData<List<String>> getCourseTitleForAssessment(int courseId){
+        return assDao.getCourseTitleForAssessment(courseId);
+    }
+
     //////Course modifications accessible by rest of the app
     public void insertCourse(Course course) {
         new InsertCourseAsyncTask(courseDao).execute(course);
@@ -146,6 +150,10 @@ public class AppRepository {
     public LiveData<Integer> getCourseCount() {
         return courseCount;
     }
+
+//    public List<Course> getCourseTitleOnMentor(int mentorId){
+//        return courseDao.getCourseTitleOnMentor(mentorId);
+//    }
 
     ///////Mentor modifications accessible by rest of the app
     public void insertMentor(Mentor mentor) {
@@ -225,7 +233,7 @@ public class AppRepository {
 
 
     //Async tasks for the above public interface.
-//////Async task for Assessment modifications.
+//////Async tasks for Assessment modifications.
     private static class InsertAssessmentAsyncTask extends AsyncTask<Assessment, Void, Void> {
         private AssDao assDao;
 

@@ -28,12 +28,16 @@ public interface AssDao {
     @Query("DELETE FROM ass_table")
     void deleteAllAssessments();
 
-    @Query("SELECT * FROM ass_table ORDER BY ass_due_date DESC")
+    @Query("SELECT * FROM ass_table ORDER BY ass_due_date ASC")
     LiveData<List<Assessment>> getAllAssessments();
 
     @Query("SELECT * FROM ass_table WHERE fk_course_id = :courseId")
     LiveData<List<Assessment>>getAssessmentsForCourse(final int courseId);
 
+    @Query("SELECT course_title FROM course_table WHERE course_id = :fk_course_id")
+    LiveData<List<String>> getCourseTitleForAssessment(final int fk_course_id);
+
     @Query("SELECT COUNT(*) FROM ass_table")
     LiveData<Integer> getAssessmentCount();
+
 }

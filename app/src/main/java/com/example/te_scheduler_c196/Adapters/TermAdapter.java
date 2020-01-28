@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
-
     private List<Term> termList = new ArrayList<>();
 
     @NonNull
