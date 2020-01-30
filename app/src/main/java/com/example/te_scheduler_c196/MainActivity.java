@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView termCountView, courseCountView, assCountView, mentorCountView;
 
-    private ImageButton emptyDbButton;
-
 
     private View.OnClickListener emptyDbListener = new View.OnClickListener(){
         @Override
@@ -85,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         assCountView = findViewById(R.id.ass_count);
         mentorCountView = findViewById(R.id.mentor_count);
 
-        emptyDbButton = findViewById(R.id.btn_emptyDatabase);
+        ImageButton emptyDbButton = findViewById(R.id.btn_emptyDatabase);
 
-        if(emptyDbButton!=null){
+        if(emptyDbButton !=null){
             emptyDbButton.setOnClickListener(emptyDbListener);
         }
 
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }else{
             termCountView.setText("0");
-            Log.e("MainActivit", "termCount null");
+            Log.e("MainActivity", "termCount null");
         }
 
         if(courseCount!=null){

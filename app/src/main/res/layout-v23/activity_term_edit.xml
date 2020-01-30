@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".TermEditActivity">
+
+
+
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_term_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/term_title"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textSize="30sp" />
+        <ImageView
+            android:id="@+id/iv_spacer"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/et_term_title" />
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_calendar_dark"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:gravity="bottom"
+            android:hint="@string/select_start_date"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:layout_below="@id/iv_spacer" />
+
+        <TextView
+            android:id="@+id/tv_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:gravity="bottom"
+            android:hint="@string/select_end_date"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:layout_below="@id/tv_start_date"/>
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_layout"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/courseForTerm_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_anchorGravity="center"
+                tools:listitem="@layout/course_item" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp"
+        android:padding="5dp"
+        android:paddingEnd="12dp"
+        android:text="@string/add_course"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="@color/colorPrimaryLight"
+        app:icon="@drawable/ic_add"
+        app:rippleColor="@color/colorPrimary"
+        android:gravity="center"/>
+
+
+</RelativeLayout>

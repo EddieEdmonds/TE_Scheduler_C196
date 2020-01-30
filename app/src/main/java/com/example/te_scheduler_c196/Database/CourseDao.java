@@ -33,7 +33,7 @@ public interface CourseDao {
     LiveData<List<Course>> getAllCourses();
 
     @Query("SELECT * FROM course_table WHERE fk_term_id = :termId")
-    LiveData<List<Course>> getCoursesForTerm(final int termId);
+    LiveData<List<Course>> getAllCoursesByTerm(final int termId);
 
     @Query("SELECT course_id, course_title FROM course_table where fk_mentor_id = :mentorId")
     List<Course> getCourseTitleOnMentor(final int mentorId);

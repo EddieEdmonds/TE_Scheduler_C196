@@ -19,6 +19,7 @@ import java.util.Locale;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHolder> {
 
     private List<Course> courseList = new ArrayList<>();
+    private List<Course> courseListForTerm = new ArrayList<>();
 
     @NonNull
     @Override
@@ -50,6 +51,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         this.courseList = courses;
         notifyDataSetChanged();
     }
+
+//    public void setCourseListForTerm(List<Course> courseListForTerm){
+//        this.courseListForTerm = courseListForTerm;
+//        notifyDataSetChanged();
+//    }
 
 
     class CourseHolder extends RecyclerView.ViewHolder{

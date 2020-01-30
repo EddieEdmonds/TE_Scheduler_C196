@@ -18,7 +18,7 @@ import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {
-    private LiveData<List<Course>> allCourses;
+    //private LiveData<List<Course>> allCourses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class CourseActivity extends AppCompatActivity {
         courseViewModel.getAllCourses().observe(this, new Observer<List<Course>>(){
             @Override
             public void onChanged(@Nullable List<Course> courseList) {
-                courseAdapter.setCourseList(courseList);
+               courseAdapter.setCourseList(courseList);
             }
         });
 

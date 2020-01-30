@@ -24,4 +24,6 @@
     <string name="start_date">Start Date: </string>
     <string name="select_start_date">Click to Select Start Date</string>
     <string name="select_end_date">Click to Select End Date</string>
+    <string name="save">Save</string>
+    <string name="add_course">ADD COURSE</string>
 </resources>

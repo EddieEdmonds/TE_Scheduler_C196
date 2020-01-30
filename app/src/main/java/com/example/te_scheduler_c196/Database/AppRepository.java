@@ -89,7 +89,6 @@ public class AppRepository {
             new DeleteAllMentorsAsyncTask(mentorDao).execute();
             new DeleteAllTermsAsyncTask(termDao).execute();
             new DeleteAllCoursesAsyncTask(courseDao).execute();
-            new DeleteAllCoursesAsyncTask(courseDao).execute();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "test catch");
@@ -126,6 +125,7 @@ public class AppRepository {
         return assDao.getCourseTitleForAssessment(courseId);
     }
 
+
     //////Course modifications accessible by rest of the app
     public void insertCourse(Course course) {
         new InsertCourseAsyncTask(courseDao).execute(course);
@@ -150,6 +150,11 @@ public class AppRepository {
     public LiveData<Integer> getCourseCount() {
         return courseCount;
     }
+
+    public LiveData<List<Course>> getAllCoursesByTerm(int termId){
+        return courseDao.getAllCoursesByTerm(termId);
+    }
+
 
 //    public List<Course> getCourseTitleOnMentor(int mentorId){
 //        return courseDao.getCourseTitleOnMentor(mentorId);

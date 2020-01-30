@@ -13,7 +13,9 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <!-- ********Main Activity******** -->
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,15 +53,22 @@
             <meta-data
                 android:name="PARENT_ACTIVITY"
                 android:value="com.example.te_scheduler_c196.MainActivity" />
-        </activity>
+        </activity> <!-- ********Term Edit Activity******** -->
         <activity
-            android:name=".AddTermActivity"
+            android:name=".TermAddActivity"
             android:label="Add Term"
             android:parentActivityName=".TermActivity">
             <meta-data
                 android:name="PARENT_ACTIVITY"
-                android:value="com.example.te_scheduler_c196.TermActivity"/>
-
+                android:value="com.example.te_scheduler_c196.TermActivity" />
+        </activity><!-- ********Term Edit Activity******** -->
+        <activity
+            android:name=".TermEditActivity"
+            android:label="Edit Term"
+            android:parentActivityName=".TermActivity">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
+                android:value="com.example.te_scheduler_c196.TermActivity" />
         </activity>
     </application>
 

@@ -3,6 +3,7 @@ package com.example.te_scheduler_c196.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
     private List<Term> termList = new ArrayList<>();
+    private onTermClickListener listener;
 
     @NonNull
     @Override
@@ -42,13 +44,34 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
         notifyDataSetChanged();
     }
 
+    public Term getTermAt(int position){
+        return termList.get(position);
+    }
+
+
     class TermHolder extends RecyclerView.ViewHolder{
         private TextView textViewTermTitle;
-
-
-        public TermHolder(@NonNull View itemView) {
+        TermHolder(@NonNull View itemView) {
             super(itemView);
             textViewTermTitle = itemView.findViewById(R.id.textView_term_title);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
+                        listener.onTermClick(termList.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface onTermClickListener{
+        void onTermClick(Term term);
+    }
+
+    public void setOnTermClickListener(onTermClickListener listener){
+        this.listener = listener;
     }
 }
