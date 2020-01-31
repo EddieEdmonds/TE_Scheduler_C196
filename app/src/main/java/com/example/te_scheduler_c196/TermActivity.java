@@ -3,6 +3,7 @@ package com.example.te_scheduler_c196;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -11,17 +12,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.te_scheduler_c196.Adapters.CourseAdapter;
 import com.example.te_scheduler_c196.Adapters.TermAdapter;
+import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Utility.DateUtil;
+import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 import com.example.te_scheduler_c196.ViewModels.TermViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +38,7 @@ public class TermActivity extends AppCompatActivity {
     public static final int EDIT_TERM_REQUEST = 2;
 
     private TermViewModel termViewModel;
+    private CourseViewModel courseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,7 @@ public class TermActivity extends AppCompatActivity {
         setContentView(R.layout.activity_term);
 
         RecyclerView termRecyclerView = findViewById(R.id.term_recycler_view);
+
         termRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         termRecyclerView.setHasFixedSize(true);
 
@@ -72,10 +80,33 @@ public class TermActivity extends AppCompatActivity {
                 return false;
             }
 
+
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                termViewModel.deleteTerm(termAdapter.getTermAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(TermActivity.this, "Term Deleted", Toast.LENGTH_SHORT).show();
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                //onSwipe for delete of a term.
+                //We obtain the term we want to check here.
+                Term checkTerm = termAdapter.getTermAt(viewHolder.getAdapterPosition());
+                //Get the termId from the term object we're checking.
+                int termId = checkTerm.getTerm_id();
+                //Then we have to access our courseViewModel to run a method that gets all courses associated with a term and ads them to a LiveData<List<Course>>
+                //We need to observe the LiveData we are returned and see what's inside it.
+                CourseViewModel courseViewModel = ViewModelProviders.of(TermActivity.this).get(CourseViewModel.class);
+                courseViewModel.getAllCoursesByTerm(termId).observe(TermActivity.this, new Observer<List<Course>>(){
+                    //In the onChanged portion, we can check the size() of the list of courses.
+                    @Override
+                    public void onChanged(List<Course> courses) {
+                        //If course size is <= 0, we allow the delete. This means that no courses were returned with the termId we are deleting.
+                        if(courses.size() <= 0){
+                            termViewModel.deleteTerm(termAdapter.getTermAt(viewHolder.getAdapterPosition()));
+                            Toast.makeText(TermActivity.this, "Term Deleted", Toast.LENGTH_SHORT).show();
+                        }else{
+                            //If we enter the else statement, we say we can't delete.
+                            termAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                            Toast.makeText(TermActivity.this, "There appear to be courses in this term.", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "Course count: "+courses.size());
+                        }
+                    }
+                });
             }
         }).attachToRecyclerView(termRecyclerView);
 

@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".TermEditActivity">
-
-
+    tools:context=".CourseEditActivity">
 
     <RelativeLayout
         android:id="@+id/top_layout"
@@ -19,39 +16,69 @@
             android:id="@+id/et_term_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/term_title"
+            android:hint="@string/course_title"
             android:inputType="text"
             android:padding="10dp"
             android:textSize="30sp" />
-        <ImageView
-            android:id="@+id/iv_spacer"
-            android:layout_width="10dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/et_term_title" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_spacer"-->
+<!--            android:layout_width="10dp"-->
+<!--            android:layout_height="10dp"-->
+<!--            android:layout_below="@id/et_term_title" />-->
 
         <TextView
             android:id="@+id/tv_start_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/et_term_title"
             android:drawableEnd="@drawable/ic_calendar_dark"
+            android:drawableRight="@drawable/ic_calendar_dark"
             android:drawableTint="@color/colorPrimaryDark"
             android:gravity="bottom"
             android:hint="@string/select_start_date"
             android:padding="10dp"
-            android:textSize="20sp"
-            android:layout_below="@id/iv_spacer" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_end_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tv_start_date"
             android:drawableEnd="@drawable/ic_calendar"
             android:drawableTint="@color/colorPrimaryDark"
             android:gravity="bottom"
             android:hint="@string/select_end_date"
             android:padding="10dp"
-            android:textSize="20sp"
-            android:layout_below="@id/tv_start_date"/>
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_course_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_end_date"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp">
+            <TextView
+                android:id="@+id/tv_course_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/course_status"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:layout_marginEnd="8dp"
+                />
+            <Spinner
+                android:id="@+id/spinner_course_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
+
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 
@@ -62,17 +89,23 @@
         android:layout_below="@+id/top_layout"
         android:scrollbars="none">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_mentor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/rv_course_for_term"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/courseForTerm_recycler_view"
+                android:id="@+id/rv_course_for_term"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_anchorGravity="center"
-                tools:listitem="@layout/course_item" />
+                tools:listitem="@layout/note_item" />
 
         </RelativeLayout>
 
@@ -91,14 +124,14 @@
         android:layout_marginBottom="3dp"
         android:background="@color/colorPrimaryLight"
         android:elevation="6dp"
+        android:gravity="center"
         android:padding="5dp"
         android:paddingEnd="12dp"
-        android:text="@string/add_course"
+        android:paddingStart="1dp"
+        android:text="@string/add_note"
         android:textColor="#FFFFFF"
         app:backgroundTint="@color/colorPrimaryLight"
         app:icon="@drawable/ic_add"
-        app:rippleColor="@color/colorPrimary"
-        android:gravity="center"/>
-
+        app:rippleColor="@color/colorPrimary" />
 
 </RelativeLayout>

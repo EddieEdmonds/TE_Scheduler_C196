@@ -17,7 +17,8 @@ public class DateUtil {
 
 //This takes 3 entries and converts to Date format.
     public static String dateConverter(int year, int month, int day){
-        month += 1;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {month += 1;}
+
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         String dateString = month + "/" + day + "/" + year;
         Date dateFormattedLong = null;

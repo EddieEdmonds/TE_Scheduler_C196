@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,10 +51,13 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
 
 
     class TermHolder extends RecyclerView.ViewHolder{
+        private RelativeLayout foreground, background;
         private TextView textViewTermTitle;
         TermHolder(@NonNull View itemView) {
             super(itemView);
             textViewTermTitle = itemView.findViewById(R.id.textView_term_title);
+            foreground = itemView.findViewById(R.id.foreground);
+            background = itemView.findViewById(R.id.background);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

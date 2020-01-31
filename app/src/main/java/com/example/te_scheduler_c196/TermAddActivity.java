@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +21,10 @@ import android.widget.Toast;
 
 import com.example.te_scheduler_c196.Utility.DateUtil;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 
 public class TermAddActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -42,7 +46,7 @@ public class TermAddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_term);
+        setContentView(R.layout.activity_term_add);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
@@ -52,21 +56,53 @@ public class TermAddActivity extends AppCompatActivity {
 
         setTitle("Add Term");
 
+
+///////////////////////Start Date/////////////////////////////
         tv_StartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+                if(tv_StartDate.getText().toString().equals("")){
+                    Calendar cal = Calendar.getInstance();
+                    int year = cal.get(Calendar.YEAR);
+                    int month = cal.get(Calendar.MONTH);
+                    int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(
-                        TermAddActivity.this,
-                        android.R.style.Theme_Black,
-                        startDateSetListener,
-                        year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+                    DatePickerDialog dialog = new DatePickerDialog(
+                            TermAddActivity.this, R.style.DatePickerDialogTheme,
+                            startDateSetListener,
+                            year, month, day);
+                    Window window = dialog.getWindow();
+                    window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                }else{
+                    String startDateString = tv_StartDate.getText().toString();
+                    Date startDate = DateUtil.stringToDateConverter(startDateString);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        LocalDate localStartDate = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        int year = localStartDate.getYear();
+                        int month = localStartDate.getMonthValue()-1;
+                        int day = localStartDate.getDayOfMonth();
+                        DatePickerDialog dialog = new DatePickerDialog(
+                                TermAddActivity.this, R.style.DatePickerDialogTheme,
+                                startDateSetListener,
+                                year, month, day);
+                        Window window = dialog.getWindow();
+                        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    } else {
+                        int year = startDate.getYear();
+                        int month = startDate.getMonth();
+                        int day = startDate.getDay();
+                        DatePickerDialog dialog = new DatePickerDialog(
+                                TermAddActivity.this, R.style.DatePickerDialogTheme,
+                                startDateSetListener,
+                                year, month, day);
+                        Window window = dialog.getWindow();
+                        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    }
+                }
+
             }
         });
 
@@ -80,21 +116,52 @@ public class TermAddActivity extends AppCompatActivity {
             }
         };
 
+///////////////////////End Date/////////////////////////////
         tv_EndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+                if(tv_EndDate.getText().toString().equals("")){
+                    Calendar cal = Calendar.getInstance();
+                    int year = cal.get(Calendar.YEAR);
+                    int month = cal.get(Calendar.MONTH);
+                    int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(
-                        TermAddActivity.this,
-                        android.R.style.Theme_Black,
-                        endDateSetListener,
-                        year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+                    DatePickerDialog dialog = new DatePickerDialog(
+                            TermAddActivity.this, R.style.DatePickerDialogTheme,
+                            endDateSetListener,
+                            year, month, day);
+                    Window window = dialog.getWindow();
+                    window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                }else{
+                    String endDateString = tv_EndDate.getText().toString();
+                    Date startDate = DateUtil.stringToDateConverter(endDateString);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        LocalDate localStartDate = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        int year = localStartDate.getYear();
+                        int month = localStartDate.getMonthValue()-1;
+                        int day = localStartDate.getDayOfMonth();
+                        DatePickerDialog dialog = new DatePickerDialog(
+                                TermAddActivity.this, R.style.DatePickerDialogTheme,
+                                endDateSetListener,
+                                year, month, day);
+                        Window window = dialog.getWindow();
+                        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    } else {
+                        int year = startDate.getYear();
+                        int month = startDate.getMonth();
+                        int day = startDate.getDay();
+                        DatePickerDialog dialog = new DatePickerDialog(
+                                TermAddActivity.this, R.style.DatePickerDialogTheme,
+                                endDateSetListener,
+                                year, month, day);
+                        Window window = dialog.getWindow();
+                        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    }
+                }
+
             }
         });
 

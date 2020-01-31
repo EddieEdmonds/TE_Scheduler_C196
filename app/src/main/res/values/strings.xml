@@ -26,4 +26,8 @@
     <string name="select_end_date">Click to Select End Date</string>
     <string name="save">Save</string>
     <string name="add_course">ADD COURSE</string>
+    <string name="delete">DELETE</string>
+    <string name="course_title">Course Title</string>
+    <string name="course_status">Course Status:</string>
+    <string name="add_note">ADD NOTE</string>
 </resources>

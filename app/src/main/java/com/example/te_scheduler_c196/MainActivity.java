@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             emptyDbButton.setOnClickListener(emptyDbListener);
         }
 
-
         ObserveItems();
     }
 

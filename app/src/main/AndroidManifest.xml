@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".CourseEditActivity"></activity>
         <!-- ********Main Activity******** -->
         <activity
             android:name=".MainActivity"
@@ -61,7 +61,7 @@
             <meta-data
                 android:name="PARENT_ACTIVITY"
                 android:value="com.example.te_scheduler_c196.TermActivity" />
-        </activity><!-- ********Term Edit Activity******** -->
+        </activity> <!-- ********Term Edit Activity******** -->
         <activity
             android:name=".TermEditActivity"
             android:label="Edit Term"

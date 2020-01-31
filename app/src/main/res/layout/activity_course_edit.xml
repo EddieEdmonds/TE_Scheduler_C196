@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    tools:context=".TermEditActivity">
-
-
+    tools:context=".CourseEditActivity">
 
     <RelativeLayout
         android:id="@+id/top_layout"
@@ -39,7 +36,8 @@
             android:hint="@string/select_start_date"
             android:padding="10dp"
             android:textSize="20sp"
-            android:layout_below="@id/iv_spacer" />
+            android:layout_below="@id/iv_spacer"
+            android:drawableRight="@drawable/ic_calendar_dark" />
 
         <TextView
             android:id="@+id/tv_end_date"
@@ -51,9 +49,18 @@
             android:hint="@string/select_end_date"
             android:padding="10dp"
             android:textSize="20sp"
-            android:layout_below="@id/tv_start_date"/>
+            android:layout_below="@id/tv_start_date"
+            android:drawableRight="@drawable/ic_calendar" />
 
     </RelativeLayout>
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            android:id="@+id/cv_mentor"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/top_layout" />-->
+
+
 
 
     <ScrollView
@@ -66,6 +73,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_mentor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/courseForTerm_recycler_view"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/courseForTerm_recycler_view"
@@ -98,7 +111,8 @@
         app:backgroundTint="@color/colorPrimaryLight"
         app:icon="@drawable/ic_add"
         app:rippleColor="@color/colorPrimary"
-        android:gravity="center"/>
-
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:paddingRight="12dp" />
 
 </RelativeLayout>
