@@ -32,7 +32,7 @@ public interface AssDao {
     LiveData<List<Assessment>> getAllAssessments();
 
     @Query("SELECT * FROM ass_table WHERE fk_course_id = :courseId")
-    LiveData<List<Assessment>>getAssessmentsForCourse(final int courseId);
+    LiveData<List<Assessment>>getAllAssessmentsByCourse(final int courseId);
 
     @Query("SELECT course_title FROM course_table WHERE course_id = :fk_course_id")
     LiveData<List<String>> getCourseTitleForAssessment(final int fk_course_id);

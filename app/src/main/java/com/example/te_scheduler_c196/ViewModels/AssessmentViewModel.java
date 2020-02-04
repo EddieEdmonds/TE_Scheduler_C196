@@ -35,7 +35,7 @@ public class AssessmentViewModel extends AndroidViewModel {
         return allAssessments;
     }
 
-    public LiveData<List<String>> getCourseTitleForAssessment(int courseId){
-        return repository.getCourseTitleForAssessment(courseId);
+    public LiveData<List<Assessment>> getAllAssessmentsByCourse(int courseId){
+        return repository.getAllAssessmentsByCourse(courseId);
     }
 }

@@ -125,6 +125,10 @@ public class AppRepository {
         return assDao.getCourseTitleForAssessment(courseId);
     }
 
+    public LiveData<List<Assessment>> getAllAssessmentsByCourse(int courseId){
+        return assDao.getAllAssessmentsByCourse(courseId);
+    }
+
 
     //////Course modifications accessible by rest of the app
     public void insertCourse(Course course) {
@@ -156,10 +160,6 @@ public class AppRepository {
     }
 
 
-//    public List<Course> getCourseTitleOnMentor(int mentorId){
-//        return courseDao.getCourseTitleOnMentor(mentorId);
-//    }
-
     ///////Mentor modifications accessible by rest of the app
     public void insertMentor(Mentor mentor) {
         new InsertMentorAsyncTask(mentorDao).execute(mentor);
@@ -185,6 +185,10 @@ public class AppRepository {
         return mentorCount;
     }
 
+    public LiveData<List<Mentor>> getMentorById(int mentorId){
+        return mentorDao.getMentorById(mentorId);
+    }
+
     ///////Note modifications accessible by rest of the app
     public void insertNote(Note note) {
         new InsertNoteAsyncTask(noteDao).execute(note);
@@ -208,6 +212,10 @@ public class AppRepository {
 
     public LiveData<Integer> getNoteCount() {
         return noteCount;
+    }
+
+    public LiveData<List<Note>> getNotesByCourse(int courseId){
+        return noteDao.getNotesByCourse(courseId);
     }
 
     //////Term modifications accessible by rest of the app

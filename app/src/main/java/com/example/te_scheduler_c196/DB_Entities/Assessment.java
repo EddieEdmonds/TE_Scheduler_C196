@@ -7,8 +7,10 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity (tableName = "ass_table",
-        foreignKeys = @ForeignKey(entity = Course.class, childColumns = "fk_course_id", parentColumns = "course_id"))
+        foreignKeys = @ForeignKey(entity = Course.class, childColumns = "fk_course_id", parentColumns = "course_id", onDelete = CASCADE))
 
 public class Assessment {
     @PrimaryKey(autoGenerate = true)

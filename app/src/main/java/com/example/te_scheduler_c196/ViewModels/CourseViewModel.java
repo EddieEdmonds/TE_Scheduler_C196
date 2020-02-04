@@ -14,7 +14,7 @@ import java.util.List;
 public class CourseViewModel extends AndroidViewModel {
     private AppRepository repository;
     private LiveData<List<Course>> allCourses;
-    private LiveData<List<Course>> allCoursesByTerm;
+    //private LiveData<List<Course>> allCoursesByTerm;
 
     public CourseViewModel(@NonNull Application application) {
         super(application);

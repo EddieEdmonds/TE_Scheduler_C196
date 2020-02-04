@@ -30,4 +30,5 @@
     <string name="course_title">Course Title</string>
     <string name="course_status">Course Status:</string>
     <string name="add_note">ADD NOTE</string>
+    <string name="course_mentor">Course Mentor</string>
 </resources>

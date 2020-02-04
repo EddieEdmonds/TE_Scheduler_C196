@@ -16,12 +16,13 @@ import java.util.List;
 public class MentorViewModel extends AndroidViewModel {
     private AppRepository repository;
     private LiveData<List<Mentor>> allMentors;
-    private LiveData<Mentor> courseTitleOnMentor;
+    private LiveData<List<Mentor>> allMentorById;
 
     public MentorViewModel(@NonNull Application application) {
         super(application);
         repository = new AppRepository(application);
         allMentors = repository.getAllMentors();
+        allMentorById = repository.getMentorById(1);
     }
 
     public void insertMentor(Mentor mentor){
@@ -39,8 +40,9 @@ public class MentorViewModel extends AndroidViewModel {
     public LiveData<List<Mentor>> getAllMentors(){
         return allMentors;
     }
-//
-//    public List<Course>getCourseTitleOnMentor(int mentorId){
-//        return repository.getCourseTitleOnMentor(mentorId);
-//    }
+
+    public LiveData<List<Mentor>> getMentorById(int mentorId){
+        return allMentorById = repository.getMentorById(mentorId);
+    }
+
 }

@@ -32,7 +32,7 @@ public interface NoteDao {
     LiveData<List<Note>> getAllNotes();
 
     @Query("SELECT * FROM note_table WHERE fk_course_id = :courseId")
-    LiveData<List<Note>> getNotesForCourse(final int courseId);
+    LiveData<List<Note>> getNotesByCourse(final int courseId);
 
     @Query("SELECT COUNT(*) FROM note_table")
     LiveData<Integer> getNoteCount();

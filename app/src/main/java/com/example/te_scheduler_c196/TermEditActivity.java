@@ -2,45 +2,50 @@ package com.example.te_scheduler_c196;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.te_scheduler_c196.Adapters.CourseAdapter;
+import com.example.te_scheduler_c196.DB_Entities.Assessment;
 import com.example.te_scheduler_c196.DB_Entities.Course;
+import com.example.te_scheduler_c196.DB_Entities.Note;
+import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Utility.DateUtil;
+import com.example.te_scheduler_c196.ViewModels.AssessmentViewModel;
 import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
+import com.example.te_scheduler_c196.ViewModels.NoteViewModel;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static android.view.Gravity.CENTER_HORIZONTAL;
 import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_END_DATE;
 import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_ID;
 import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_START_DATE;
@@ -49,10 +54,15 @@ import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_TITLE;
 public class TermEditActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    public static final int ADD_COURSE_REQUEST = 1;
+
     private TextView tv_StartDate, tv_EndDate;
     private EditText et_TermTitle;
 
     private String dateFormattedShort = null;
+
+    private List<Note> notesAssocWithCourse = new ArrayList<>();
+    private List<Assessment> assAssocWithCourse = new ArrayList<>();
 
     private DatePickerDialog.OnDateSetListener startDateSetListener;
     private DatePickerDialog.OnDateSetListener endDateSetListener;
@@ -79,7 +89,7 @@ public class TermEditActivity extends AppCompatActivity {
         int termId = termData.getIntExtra(EXTRA_TERM_ID, 0);
 
 
-        //Everything for handling the course display when inside a term.
+//////////////////Everything for handling the course display when inside a term.///////////////////////
         RecyclerView courseForTermRecyclerView = findViewById(R.id.courseForTerm_recycler_view);
         courseForTermRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         courseForTermRecyclerView.setHasFixedSize(true);
@@ -87,7 +97,7 @@ public class TermEditActivity extends AppCompatActivity {
         final CourseAdapter courseAdapter = new CourseAdapter();
         courseForTermRecyclerView.setAdapter(courseAdapter);
 
-        CourseViewModel courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        final CourseViewModel courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         courseViewModel.getAllCoursesByTerm(termId).observe(this, new Observer<List<Course>>() {
             @Override
             public void onChanged(@Nullable List<Course> courseList) {
@@ -185,13 +195,67 @@ public class TermEditActivity extends AppCompatActivity {
             }
         };
 
+///////////////////////////On swipe event for deleting a course in the TermEditActivity.//////////////////////////////
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                //onSwipe for delete of a Course in the TermEditActivity.
+                //We grab the course that we swiped on.
+                final Course swipedCourse = courseAdapter.getCourseAt(viewHolder.getAdapterPosition());
+
+                //We pop a dialog letting users know that Notes and Assessments will be deleted as well.
+                AlertDialog.Builder builder = new AlertDialog.Builder(viewHolder.itemView.getContext())
+                        .setMessage("All Notes and Assessments associated with this course will be deleted!");
+
+                //If they click positive button: course, note, and assessments deleted
+                // Course deleted via the below deleteCourse method.
+                // Notes and Assessments deleted through "on delete CASCADE" in the respective DAOs.
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        // Your action
+                        courseViewModel.deleteCourse(swipedCourse);
+                        dialog.cancel();
+                    }
+                });
+                //If you click cancel, view is refreshed and course is returned.
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        courseAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            }
+        }).attachToRecyclerView(courseForTermRecyclerView);
+
+        //This is to control the FAB to open the TermAddActivity
+        ExtendedFloatingActionButton btnAddCourse = findViewById(R.id.fab_add_course);
+        btnAddCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //New term onClick method
+            public void onClick(View v) {
+                Intent intent = new Intent(TermEditActivity.this, CourseAddActivity.class);
+                startActivityForResult(intent, ADD_COURSE_REQUEST);
+
+            }
+        });
+
         setTitle("Edit Term");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.save_term_menu, menu);
+        menuInflater.inflate(R.menu.save_menu, menu);
         return true;
     }
 
@@ -199,7 +263,7 @@ public class TermEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //using IF statement here because we only have one button in our "menu". The save button.
         //IF we add more buttons in the future, below this is a version using a Switch statement.
-        if (item.getItemId() == R.id.save_term) {
+        if (item.getItemId() == R.id.save) {
             saveEditTerm();
             return true;
         }

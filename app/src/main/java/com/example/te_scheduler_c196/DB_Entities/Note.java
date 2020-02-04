@@ -4,8 +4,11 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import static androidx.room.ForeignKey.CASCADE;
+import static androidx.room.ForeignKey.SET_NULL;
+
 @Entity(tableName = "note_table",
-        foreignKeys = @ForeignKey(entity = Course.class, childColumns = "fk_course_id", parentColumns = "course_id"))
+        foreignKeys = @ForeignKey(entity = Course.class, childColumns = "fk_course_id", parentColumns = "course_id", onDelete = CASCADE))
 
 public class Note {
     @PrimaryKey(autoGenerate = true)

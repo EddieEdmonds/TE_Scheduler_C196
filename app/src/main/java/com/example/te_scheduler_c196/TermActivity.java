@@ -38,7 +38,6 @@ public class TermActivity extends AppCompatActivity {
     public static final int EDIT_TERM_REQUEST = 2;
 
     private TermViewModel termViewModel;
-    private CourseViewModel courseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +61,7 @@ public class TermActivity extends AppCompatActivity {
             }
         });
 
+        //This is to control the FAB to open the TermAddActivity
         FloatingActionButton btnAddTerm = findViewById(R.id.btn_add_term);
         btnAddTerm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class TermActivity extends AppCompatActivity {
         });
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -91,19 +91,19 @@ public class TermActivity extends AppCompatActivity {
                 //Then we have to access our courseViewModel to run a method that gets all courses associated with a term and ads them to a LiveData<List<Course>>
                 //We need to observe the LiveData we are returned and see what's inside it.
                 CourseViewModel courseViewModel = ViewModelProviders.of(TermActivity.this).get(CourseViewModel.class);
-                courseViewModel.getAllCoursesByTerm(termId).observe(TermActivity.this, new Observer<List<Course>>(){
+                courseViewModel.getAllCoursesByTerm(termId).observe(TermActivity.this, new Observer<List<Course>>() {
                     //In the onChanged portion, we can check the size() of the list of courses.
                     @Override
                     public void onChanged(List<Course> courses) {
                         //If course size is <= 0, we allow the delete. This means that no courses were returned with the termId we are deleting.
-                        if(courses.size() <= 0){
+                        if (courses.size() <= 0) {
                             termViewModel.deleteTerm(termAdapter.getTermAt(viewHolder.getAdapterPosition()));
                             Toast.makeText(TermActivity.this, "Term Deleted", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             //If we enter the else statement, we say we can't delete.
                             termAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
                             Toast.makeText(TermActivity.this, "There appear to be courses in this term.", Toast.LENGTH_SHORT).show();
-                            Log.i(TAG, "Course count: "+courses.size());
+                            Log.i(TAG, "Course count: " + courses.size());
                         }
                     }
                 });
@@ -131,14 +131,14 @@ public class TermActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==ADD_TERM_REQUEST && resultCode==RESULT_OK){
+        if (requestCode == ADD_TERM_REQUEST && resultCode == RESULT_OK) {
             //This handles new terms being added.
             assert data != null;
             String term_title = data.getStringExtra(TermAddActivity.EXTRA_TERM_TITLE);
             String term_start_date = data.getStringExtra(TermAddActivity.EXTRA_TERM_START_DATE);
             String term_end_date = data.getStringExtra(TermAddActivity.EXTRA_TERM_END_DATE);
 
-            Log.i(TAG, "Extras: TERM_EXTRA: "+ term_title+" START_EXTRA: "+ term_start_date+" END_EXTRA: "+term_end_date);
+            Log.i(TAG, "Extras: TERM_EXTRA: " + term_title + " START_EXTRA: " + term_start_date + " END_EXTRA: " + term_end_date);
 
             Date termStartDate = DateUtil.stringToDateConverter(term_start_date);
             Date termEndDate = DateUtil.stringToDateConverter(term_end_date);
@@ -146,19 +146,17 @@ public class TermActivity extends AppCompatActivity {
             Term term = null;
             try {
                 term = new Term(term_title, termStartDate, termEndDate);
+                termViewModel.insertTerm(term);
                 Log.i(TAG, "Created new term");
             } catch (Exception e) {
                 Log.i(TAG, "Something went wrong.");
                 e.printStackTrace();
             }
-
-            termViewModel.insertTerm(term);
-
             Toast.makeText(this, "Term Saved!", Toast.LENGTH_SHORT).show();
-        }else if(requestCode==EDIT_TERM_REQUEST && resultCode==RESULT_OK){
+        } else if (requestCode == EDIT_TERM_REQUEST && resultCode == RESULT_OK) {
             //This is the update portion.
             int id = data.getIntExtra(TermAddActivity.EXTRA_TERM_ID, -1);
-            if(id==-1){
+            if (id == -1) {
                 Toast.makeText(this, "Term can't be updated!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -175,7 +173,7 @@ public class TermActivity extends AppCompatActivity {
             termViewModel.updateTerm(term);
             Toast.makeText(this, "Term updated!", Toast.LENGTH_SHORT).show();
 
-        }else {
+        } else {
             Toast.makeText(this, "Term NOT Saved.", Toast.LENGTH_SHORT).show();
         }
     }

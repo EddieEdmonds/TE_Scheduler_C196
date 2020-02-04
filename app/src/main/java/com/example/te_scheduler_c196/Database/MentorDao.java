@@ -32,12 +32,11 @@ public interface MentorDao {
     @Query("SELECT * FROM mentor_table ORDER BY mentor_name DESC")
     LiveData<List<Mentor>> getAllMentors();
 
-    @Query("SELECT * FROM course_table WHERE fk_mentor_id = :mentorId")
-    LiveData<List<Course>> getCoursesAssignedToMentor(final int mentorId);
 
-//    @Query("SELECT * FROM mentor_table WHERE fk_course_id = :courseId")
-//    LiveData<List<Mentor>> getMentorForCourse(final int courseId);
+    @Query("SELECT * FROM mentor_table WHERE mentor_id = :mentorId")
+    LiveData<List<Mentor>> getMentorById(final int mentorId);
 
     @Query("SELECT COUNT(*) FROM mentor_table")
     LiveData<Integer> getMentorCount();
+
 }

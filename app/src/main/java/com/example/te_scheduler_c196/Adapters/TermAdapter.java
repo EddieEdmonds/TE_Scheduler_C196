@@ -20,6 +20,25 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
     private List<Term> termList = new ArrayList<>();
     private onTermClickListener listener;
 
+
+    class TermHolder extends RecyclerView.ViewHolder{
+        private TextView textViewTermTitle;
+
+        TermHolder(@NonNull View itemView) {
+            super(itemView);
+            textViewTermTitle = itemView.findViewById(R.id.textView_term_title);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
+                        listener.onTermClick(termList.get(position));
+                    }
+                }
+            });
+        }
+    }
+
     @NonNull
     @Override
     public TermHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,7 +51,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
     public void onBindViewHolder(@NonNull TermHolder holder, int position) {
         Term currentTerm = termList.get(position);
         holder.textViewTermTitle.setText(currentTerm.getTerm_title());
-
     }
 
     @Override
@@ -50,26 +68,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
     }
 
 
-    class TermHolder extends RecyclerView.ViewHolder{
-        private RelativeLayout foreground, background;
-        private TextView textViewTermTitle;
-        TermHolder(@NonNull View itemView) {
-            super(itemView);
-            textViewTermTitle = itemView.findViewById(R.id.textView_term_title);
-            foreground = itemView.findViewById(R.id.foreground);
-            background = itemView.findViewById(R.id.background);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
-                        listener.onTermClick(termList.get(position));
-                    }
-                }
-            });
-        }
-    }
 
     public interface onTermClickListener{
         void onTermClick(Term term);
