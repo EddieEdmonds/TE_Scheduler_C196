@@ -46,14 +46,14 @@ public class PopulateDb {
 
     public static List<Course> popCourses(){
         List<Course> courses = new ArrayList<>();
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"1",getDate(0),getDate(10),"COMPLETE",1,1));
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"2",getDate(10),getDate(20),"IN PROGRESS",1,2));
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"3",getDate(100),getDate(110),"WAITING",1,2));
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"4",getDate(110),getDate(120),"WAITING",1,3));
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"5",getDate(0),getDate(10),"WAITING",2,1));
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"6",getDate(10),getDate(20),"WAITING",2,2));
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"7",getDate(100),getDate(110),"WAITING",2,2));
-        courses.add(new Course(SAMPLE_COURSE_TITLE +"8",getDate(110),getDate(120),"WAITING",2,3));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"1",getDate(0),getDate(10),"Completed",1,1));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"2",getDate(10),getDate(20),"In Progress",1,2));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"3",getDate(100),getDate(110),"Plan to Take",1,2));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"4",getDate(110),getDate(120),"Plan to Take",1,3));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"5",getDate(0),getDate(10),"Plan to Take",2,1));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"6",getDate(10),getDate(20),"Dropped",2,2));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"7",getDate(100),getDate(110),"Dropped",2,2));
+        courses.add(new Course(SAMPLE_COURSE_TITLE +"8",getDate(110),getDate(120),"Plan to Take",2,3));
 
         return courses;
     }

@@ -96,7 +96,7 @@ public class CourseAddActivity extends AppCompatActivity {
         sp_StatusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_CourseStatus.setAdapter(sp_StatusAdapter);
 
-        //Handles getting all of the available terms and filing the term spinner.
+////////////////Handles getting all of the available terms and filing the term spinner.//////////////////////////////////////
         //final TermAdapter termAdapter = new TermAdapter();
         final ArrayAdapter<String> sp_CourseTermAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, termListTitle);
         sp_CourseTermAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

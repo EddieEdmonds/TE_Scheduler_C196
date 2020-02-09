@@ -16,12 +16,14 @@ public class TermViewModel extends AndroidViewModel {
     private AppRepository repository;
     private LiveData<List<Term>> allTerms;
     private LiveData<List<Course>> allCoursesForTerm;
+    private LiveData<List<Term>> termByid;
 
     public TermViewModel(@NonNull Application application) {
         super(application);
         repository = new AppRepository(application);
         allTerms = repository.getAllTerms();
         allCoursesForTerm = repository.getAllCoursesByTerm(1);
+        termByid = repository.getTermById(-1);
     }
 
     public void insertTerm(Term term){
@@ -42,6 +44,10 @@ public class TermViewModel extends AndroidViewModel {
 
     public LiveData<List<Course>> getAllCoursesForTerm(int termId){
         return allCoursesForTerm = repository.getAllCoursesByTerm(termId);
+    }
+
+    public LiveData<List<Term>> getTermByid(int termId){
+        return termByid = repository.getTermById(termId);
     }
 
 

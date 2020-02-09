@@ -29,7 +29,7 @@ public interface MentorDao {
     @Query("DELETE FROM mentor_table")
     void deleteAllMentors();
 
-    @Query("SELECT * FROM mentor_table ORDER BY mentor_name DESC")
+    @Query("SELECT * FROM mentor_table ORDER BY mentor_name")
     LiveData<List<Mentor>> getAllMentors();
 
 

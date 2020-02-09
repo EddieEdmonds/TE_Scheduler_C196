@@ -3,6 +3,7 @@ package com.example.te_scheduler_c196.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         private TextView textViewCourseTermId;
         private TextView textViewCourseStartDate;
         private TextView textViewCourseEndDate;
+        private ImageButton ibCourseEdit;
+        private ImageButton ibCourseDetail;
 
 
         CourseHolder(@NonNull View itemView) {
@@ -35,12 +38,37 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
             textViewCourseTermId = itemView.findViewById(R.id.textView_course_term_id);
             textViewCourseStartDate = itemView.findViewById(R.id.textView_course_start_date);
             textViewCourseEndDate = itemView.findViewById(R.id.textView_course_end_date);
+            ibCourseEdit = itemView.findViewById(R.id.btn_course_edit);
+            ibCourseDetail = itemView.findViewById(R.id.btn_course_detail);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if(listener!=null&&position!=RecyclerView.NO_POSITION){
                         listener.onCourseClick(courseList.get(position));
+                    }
+                }
+            });
+
+            //handles clicking the edit button in the recycler view for course
+            ibCourseEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
+                        listener.onEditClick(courseList.get(position));
+                    }
+                }
+            });
+
+            //handles clicking the main area in the recycler view for course
+            ibCourseDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
+                        listener.onDetailClick(courseList.get(position));
                     }
                 }
             });
@@ -86,6 +114,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
     public interface onCourseClickListener{
         void onCourseClick(Course course);
+        void onEditClick(Course course);
+        void onDetailClick(Course course);
     }
 
     public void setOnCourseClickListener(onCourseClickListener listener){

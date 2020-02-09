@@ -242,6 +242,10 @@ public class AppRepository {
     public LiveData<Integer> getTermCount() {
         return termCount;
     }
+
+    public LiveData<List<Term>> getTermById(int termId){
+        return termDao.getTermById(termId);
+    }
 ////******************************************************************************************************
 
 

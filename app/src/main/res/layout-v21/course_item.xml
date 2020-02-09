@@ -13,24 +13,22 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:paddingTop="8dp">
-
         <ImageButton
             android:id="@+id/btn_course_detail"
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:layout_toLeftOf="@+id/btn_course_edit"
-            android:background="@color/transparent"
-            android:layout_toStartOf="@+id/btn_course_edit" />
+            android:layout_toStartOf="@id/btn_course_edit"
+            android:backgroundTint="@color/transparent"/>
 
         <ImageButton
             android:id="@+id/btn_course_edit"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/ic_edit_white"
             android:backgroundTint="@color/colorPrimaryLight"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:padding="4dp"/>
 
         <TextView
             android:id="@+id/textView_course_title"

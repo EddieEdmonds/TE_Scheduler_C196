@@ -30,7 +30,6 @@ public class Course {
     private Integer fk_mentor_id;
 
 
-
     public Course(String course_title, Date course_start, Date course_end, String course_status, Integer fk_term_id, Integer fk_mentor_id) {
         this.course_title = course_title;
         this.course_start = course_start;
@@ -68,7 +67,5 @@ public class Course {
         return fk_term_id;
     }
 
-    public Integer getFk_mentor_id() {
-        return fk_mentor_id;
-    }
+    public Integer getFk_mentor_id() { return fk_mentor_id; }
 }

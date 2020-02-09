@@ -29,7 +29,7 @@ public interface CourseDao {
     @Query("DELETE FROM course_table")
     void deleteAllCourses();
 
-    @Query("SELECT * FROM course_table ORDER BY course_start DESC")
+    @Query("SELECT * FROM course_table ORDER BY fk_term_id, course_start")
     LiveData<List<Course>> getAllCourses();
 
     @Query("SELECT * FROM course_table WHERE fk_term_id = :termId")

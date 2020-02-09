@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_ID;
 import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_END_DATE;
 import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_ID;
 import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_START_DATE;
@@ -55,6 +57,7 @@ public class TermEditActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public static final int ADD_COURSE_REQUEST = 1;
+    public static final int EDIT_COURSE_REQUEST = 2;
 
     private TextView tv_StartDate, tv_EndDate;
     private EditText et_TermTitle;
@@ -102,6 +105,67 @@ public class TermEditActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Course> courseList) {
                 courseAdapter.setCourseList(courseList);
+            }
+        });
+
+        //listeners for clicking on the recycler view course items. For detail and course edit.
+        courseAdapter.setOnCourseClickListener(new CourseAdapter.onCourseClickListener() {
+            @Override
+            public void onCourseClick(Course course) {
+                Intent intent = new Intent(TermEditActivity.this, CourseDetailActivity.class);
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_TITLE, course.getCourse_title());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_START_DATE, DateUtil.dateToString(course.getCourse_start()));
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_END_DATE, DateUtil.dateToString(course.getCourse_end()));
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_STATUS, course.getCourse_status());
+
+                intent.putExtra(EXTRA_COURSE_ID, course.getCourse_id());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_MENTOR_ID, course.getFk_mentor_id());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_TERM_ID, course.getFk_term_id());
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onEditClick(Course course) {
+                Intent intent = new Intent(TermEditActivity.this, CourseEditActivity.class);
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_TITLE, course.getCourse_title());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_START_DATE, DateUtil.dateToString(course.getCourse_start()));
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_END_DATE, DateUtil.dateToString(course.getCourse_end()));
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_STATUS, course.getCourse_status());
+
+                intent.putExtra(EXTRA_COURSE_ID, course.getCourse_id());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_MENTOR_ID, course.getFk_mentor_id());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_TERM_ID, course.getFk_term_id());
+
+                startActivityForResult(intent, EDIT_COURSE_REQUEST);
+            }
+
+            @Override
+            public void onDetailClick(Course course) {
+                Intent intent = new Intent(TermEditActivity.this, CourseDetailActivity.class);
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_TITLE, course.getCourse_title());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_START_DATE, DateUtil.dateToString(course.getCourse_start()));
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_END_DATE, DateUtil.dateToString(course.getCourse_end()));
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_STATUS, course.getCourse_status());
+
+                intent.putExtra(EXTRA_COURSE_ID, course.getCourse_id());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_MENTOR_ID, course.getFk_mentor_id());
+                intent.putExtra(CourseAddActivity.EXTRA_COURSE_TERM_ID, course.getFk_term_id());
+
+                startActivity(intent);
+
+            }
+        });
+
+        ///This is to control the FAB to open the TermAddActivity/////////////////////
+        ExtendedFloatingActionButton btnAddCourse = findViewById(R.id.fab_add_course);
+        btnAddCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            //New term onClick method
+            public void onClick(View v) {
+                Intent intent = new Intent(TermEditActivity.this, CourseAddActivity.class);
+                startActivityForResult(intent, ADD_COURSE_REQUEST);
+
             }
         });
 
@@ -183,8 +247,6 @@ public class TermEditActivity extends AppCompatActivity {
             }
         });
 
-
-
         endDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -194,6 +256,7 @@ public class TermEditActivity extends AppCompatActivity {
 
             }
         };
+
 
 ///////////////////////////On swipe event for deleting a course in the TermEditActivity.//////////////////////////////
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
@@ -237,17 +300,9 @@ public class TermEditActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(courseForTermRecyclerView);
 
-        //This is to control the FAB to open the TermAddActivity
-        ExtendedFloatingActionButton btnAddCourse = findViewById(R.id.fab_add_course);
-        btnAddCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //New term onClick method
-            public void onClick(View v) {
-                Intent intent = new Intent(TermEditActivity.this, CourseAddActivity.class);
-                startActivityForResult(intent, ADD_COURSE_REQUEST);
 
-            }
-        });
+
+
 
         setTitle("Edit Term");
     }
@@ -293,6 +348,59 @@ public class TermEditActivity extends AppCompatActivity {
 
         setResult(RESULT_OK, termData);
         finish();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_CANCELED){
+            CourseViewModel courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+
+            assert data != null;
+            String courseTitle = data.getStringExtra(CourseAddActivity.EXTRA_COURSE_TITLE);
+            String courseStartDate = data.getStringExtra(CourseAddActivity.EXTRA_COURSE_START_DATE);
+            String courseEndDate = data.getStringExtra(CourseAddActivity.EXTRA_COURSE_END_DATE);
+            String courseStatus = data.getStringExtra(CourseAddActivity.EXTRA_COURSE_STATUS);
+            int courseTermId = data.getIntExtra(CourseAddActivity.EXTRA_COURSE_TERM_ID, -1);
+            int fk_courseMentorId = data.getIntExtra(CourseAddActivity.EXTRA_COURSE_MENTOR_ID, -1);
+
+
+            Date courseStartDateConverted = DateUtil.stringToDateConverter(courseStartDate);                        //Dates received from CourseAddActivity are in String format.
+            Date courseEndDateConverted = DateUtil.stringToDateConverter(courseEndDate);                            //These two lines convert to Date format.
+
+            Course course;
+
+            if (requestCode == ADD_COURSE_REQUEST && resultCode == RESULT_OK) {
+                try {
+                    course = new Course(courseTitle, courseStartDateConverted, courseEndDateConverted, courseStatus, courseTermId, fk_courseMentorId);
+                    courseViewModel.insertCourse(course);
+                    Log.i(TAG, "Created new course");
+                    Toast.makeText(this, "Course Saved!", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Log.i(TAG, "Something went wrong saving new Course");
+                    e.printStackTrace();
+                }
+            }else if(requestCode==EDIT_COURSE_REQUEST && resultCode == RESULT_OK){
+                int courseId = data.getIntExtra(EXTRA_COURSE_ID, -1);
+                try {
+                    if(courseId != -1){
+                        course = new Course(courseTitle, courseStartDateConverted, courseEndDateConverted, courseStatus, courseTermId, fk_courseMentorId);
+                        course.setCourse_id(courseId);
+                        courseViewModel.updateCourse(course);
+                        Log.i(TAG, "Updated course");
+                        Toast.makeText(this, "Course Saved!", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e) {
+                    Log.i(TAG, "Something went wrong updating Course");
+                    e.printStackTrace();
+                }
+            }else{
+                Toast.makeText(this, "Course not saved!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
     }
 }
