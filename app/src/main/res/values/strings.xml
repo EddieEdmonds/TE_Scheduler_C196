@@ -32,4 +32,10 @@
     <string name="add_note">ADD NOTE</string>
     <string name="course_mentor">Course Mentor</string>
     <string name="display_term">will display your term</string>
+    <string name="will_display_status">will display status</string>
+    <string name="edit">edit</string>
+    <string name="start">Start:</string>
+    <string name="end">End:</string>
+    <string name="note_title">Note Title</string>
+    <string name="note_body">Note Body</string>
 </resources>

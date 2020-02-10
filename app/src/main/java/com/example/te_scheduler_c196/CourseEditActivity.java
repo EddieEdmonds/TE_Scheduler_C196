@@ -38,6 +38,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_END_DATE;
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_ID;
@@ -51,20 +52,15 @@ import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_TITLE
 public class CourseEditActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    public static final int NOTE_ADD_REQUEST = 1;
-
     private EditText et_CourseEditTitle;
     private TextView tv_CourseStartDate, tv_CourseEndDate;
     private Spinner sp_CourseStatus, sp_CourseTerm, sp_CourseMentor;
-    private CardView cv_MentorForCourse;
 
     private String dateFormattedShort = null;
 
     private List<String> spCourseStatusList = new ArrayList<>();
     private List<String> mentorNameList = new ArrayList<>();
-    private List<String> currentMentorList = new ArrayList<>();
     private List<String> termTitleList = new ArrayList<>();
-    private List<String> currentTermList = new ArrayList<>();
 
     private List<Term> termListTerm = new ArrayList<>();
     private List<Mentor> mentorListMentor = new ArrayList<>();
@@ -76,7 +72,7 @@ public class CourseEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_edit);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
 
         final Intent courseData = getIntent();
 
@@ -114,42 +110,6 @@ public class CourseEditActivity extends AppCompatActivity {
                 sp_CourseStatus.setSelection(statusIndex);
             }
         }
-
-////////////////////////////Displaying Notes for Course////////////////////////////////////////////////////////////////
-//        int courseId = courseData.getIntExtra(EXTRA_COURSE_ID, -1);
-//        RecyclerView rvNotesForCourse = findViewById(R.id.rv_note_for_course);
-//        rvNotesForCourse.setLayoutManager(new LinearLayoutManager(this));
-//        rvNotesForCourse.setHasFixedSize(true);
-//
-//        final NoteAdapter noteAdapter = new NoteAdapter();
-//        rvNotesForCourse.setAdapter(noteAdapter);
-//
-//        final NoteViewModel noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
-//        noteViewModel.getNotesByCourse(courseId).observe(this, new Observer<List<Note>>() {
-//            @Override
-//            public void onChanged(@Nullable List<Note> noteList) {
-//                noteAdapter.setNotes(noteList);
-//            }
-//        });
-
-
-//////////////////////////////Getting mentor information for selected course to fill recycler view///////////////////////////////////////////
-//        int mentorId = courseData.getIntExtra(EXTRA_COURSE_MENTOR_ID, -1);
-//        RecyclerView rvMentorForCourse = findViewById(R.id.rv_mentor_for_course);
-//        rvMentorForCourse.setLayoutManager(new LinearLayoutManager(this));
-//        rvMentorForCourse.setHasFixedSize(true);
-//
-//        final MentorAdapter mentorAdapter = new MentorAdapter();
-//        rvMentorForCourse.setAdapter(mentorAdapter);
-//
-//        final MentorViewModel mentorViewModel = ViewModelProviders.of(this).get(MentorViewModel.class);
-//        mentorViewModel.getMentorById(mentorId).observe(this, new Observer<List<Mentor>>() {
-//            @Override
-//            public void onChanged(@Nullable List<Mentor> mentorList) {
-//                mentorAdapter.setMentors(mentorList);
-//                mentorAdapter.notifyDataSetChanged();
-//            }
-//        });
 
 //////////////////////////Handling Mentor spinner menu/////////////////////////////////////////////////
         int mentorId = courseData.getIntExtra(EXTRA_COURSE_MENTOR_ID, -1);

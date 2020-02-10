@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class TermAddActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -48,7 +49,7 @@ public class TermAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_add);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
 
         tv_StartDate = findViewById(R.id.tv_start_date);
         tv_EndDate = findViewById(R.id.tv_end_date);

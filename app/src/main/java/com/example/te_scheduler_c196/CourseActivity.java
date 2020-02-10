@@ -1,29 +1,24 @@
 package com.example.te_scheduler_c196;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.te_scheduler_c196.Adapters.CourseAdapter;
-import com.example.te_scheduler_c196.Adapters.TermAdapter;
 import com.example.te_scheduler_c196.DB_Entities.Course;
-import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Utility.DateUtil;
 import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_ID;
-import static com.example.te_scheduler_c196.TermActivity.EDIT_TERM_REQUEST;
 
 public class CourseActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -42,8 +36,8 @@ public class CourseActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
 
     //private LiveData<List<Course>> allCourses;
-    public static final int ADD_COURSE_REQUEST = 1;
-    public static final int EDIT_COURSE_REQUEST = 2;
+    public static final int ADD_COURSE_REQUEST = 3;
+    public static final int EDIT_COURSE_REQUEST = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,97 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".CourseEditActivity">
-
-    <RelativeLayout
-        android:id="@+id/top_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/et_term_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/term_title"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textSize="30sp" />
-        <ImageView
-            android:id="@+id/iv_spacer"
-            android:layout_width="10dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/et_term_title" />
-
-        <TextView
-            android:id="@+id/tv_start_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_calendar_dark"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:gravity="bottom"
-            android:hint="@string/select_start_date"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:layout_below="@id/iv_spacer"
-            android:drawableRight="@drawable/ic_calendar_dark" />
-
-        <TextView
-            android:id="@+id/tv_end_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_calendar"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:gravity="bottom"
-            android:hint="@string/select_end_date"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:layout_below="@id/tv_start_date"
-            android:drawableRight="@drawable/ic_calendar" />
-
-    </RelativeLayout>
-
-<!--        <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/cv_mentor"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/top_layout" />-->
-
-
-
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_layout"
         android:scrollbars="none">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_mentor"
+            <RelativeLayout
+                android:id="@+id/top_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/courseForTerm_recycler_view"/>
+                android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/courseForTerm_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_anchorGravity="center"
-                tools:listitem="@layout/course_item" />
+                <EditText
+                    android:id="@+id/et_course_edit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/course_title"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/et_course_edit_title">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="@string/start"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_start_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_calendar_dark"
+                        android:gravity="bottom"
+                        android:hint="@string/select_start_date"
+                        android:padding="10dp"
+                        android:textSize="20sp"
+                        android:drawableRight="@drawable/ic_calendar_dark" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/ll_start">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="@string/end"/>
+
+                    <TextView
+                        android:id="@+id/tv_end_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:drawableEnd="@drawable/ic_calendar_dark"
+                        android:gravity="bottom"
+                        android:hint="@string/select_end_date"
+                        android:padding="10dp"
+                        android:textSize="20sp"
+                        android:drawableRight="@drawable/ic_calendar" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_course_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_end"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_course_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/course_status"
+                        android:textSize="20sp"
+                        android:layout_marginRight="8dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_course_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_course_term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_course_status"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_course_term"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/course_term"
+                        android:textSize="20sp"
+                        android:layout_marginRight="8dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_course_term"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_course_mentor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_course_term"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_course_mentor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/course_mentor"
+                        android:textSize="20sp"
+                        android:layout_marginRight="8dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_course_mentor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
 
         </RelativeLayout>
-
     </ScrollView>
 
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/efab_add_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -103,16 +185,19 @@
         android:layout_marginRight="3dp"
         android:layout_marginBottom="3dp"
         android:background="@color/colorPrimaryLight"
-        android:elevation="6dp"
+        android:gravity="center"
         android:padding="5dp"
+        android:paddingStart="1dp"
         android:paddingEnd="12dp"
-        android:text="@string/add_course"
+        android:text="@string/add_note"
         android:textColor="#FFFFFF"
         app:backgroundTint="@color/colorPrimaryLight"
         app:icon="@drawable/ic_add"
         app:rippleColor="@color/colorPrimary"
-        android:gravity="center"
         android:layout_alignParentRight="true"
+        android:paddingLeft="1dp"
         android:paddingRight="12dp" />
 
+
 </RelativeLayout>
+

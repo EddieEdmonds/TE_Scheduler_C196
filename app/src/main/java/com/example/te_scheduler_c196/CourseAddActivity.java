@@ -1,11 +1,5 @@
 package com.example.te_scheduler_c196;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,24 +18,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.te_scheduler_c196.Adapters.CourseAdapter;
-import com.example.te_scheduler_c196.Adapters.TermAdapter;
-import com.example.te_scheduler_c196.DB_Entities.Course;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.te_scheduler_c196.DB_Entities.Mentor;
 import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Utility.DateUtil;
-import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 import com.example.te_scheduler_c196.ViewModels.MentorViewModel;
 import com.example.te_scheduler_c196.ViewModels.TermViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class CourseAddActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -76,7 +71,7 @@ public class CourseAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_add);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
 
         tv_StartDate = findViewById(R.id.tv_start_date);
         tv_EndDate = findViewById(R.id.tv_end_date);
@@ -311,6 +306,5 @@ public class CourseAddActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 }

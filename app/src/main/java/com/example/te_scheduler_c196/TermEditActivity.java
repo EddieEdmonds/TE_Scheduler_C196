@@ -1,16 +1,5 @@
 package com.example.te_scheduler_c196;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,24 +17,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.te_scheduler_c196.Adapters.CourseAdapter;
 import com.example.te_scheduler_c196.DB_Entities.Assessment;
 import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.DB_Entities.Note;
-import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Utility.DateUtil;
-import com.example.te_scheduler_c196.ViewModels.AssessmentViewModel;
 import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
-import com.example.te_scheduler_c196.ViewModels.NoteViewModel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Objects;
 
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_ID;
 import static com.example.te_scheduler_c196.TermAddActivity.EXTRA_TERM_END_DATE;
@@ -75,7 +70,7 @@ public class TermEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_edit);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
 
 
         //Finding view items for editing the term.

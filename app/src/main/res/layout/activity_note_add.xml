@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteAddActivity"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/et_note_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/note_title"/>
+    <EditText
+        android:id="@+id/et_note_body"
+        android:paddingTop="50dp"
+        android:layout_below="@+id/et_note_title"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="@string/note_body"/>
+
+</RelativeLayout>

@@ -52,7 +52,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteHolder> {
     public void onBindViewHolder(@NonNull NoteHolder holder, int position) {
         Note currentNote = noteList.get(position);
         holder.tvNoteTitle.setText(currentNote.getTitle());
-        holder.tvNoteDescription.setText(currentNote.getTitle());
+        holder.tvNoteDescription.setText(currentNote.getNote_body());
 
     }
 
