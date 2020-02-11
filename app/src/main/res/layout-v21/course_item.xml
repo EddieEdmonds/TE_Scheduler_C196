@@ -25,7 +25,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/ic_edit_white"
-            android:backgroundTint="@color/colorPrimaryLight"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:padding="4dp"/>

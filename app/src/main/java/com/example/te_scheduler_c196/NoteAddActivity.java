@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_ID;
 
 public class NoteAddActivity extends AppCompatActivity {
@@ -30,7 +32,7 @@ public class NoteAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_add);
 
-        //Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
 
         final Intent courseData = getIntent();
 

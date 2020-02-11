@@ -16,7 +16,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mentor_recycler_view"
+                android:id="@+id/mentor_recycler_view_default"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_anchorGravity="center"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="32dp"
-        android:background="@color/colorPrimaryLight"
+        android:backgroundTint="@color/colorPrimaryLight"
         android:src="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

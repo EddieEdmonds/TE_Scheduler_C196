@@ -3,9 +3,7 @@ package com.example.te_scheduler_c196.Database;
 import android.app.Application;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 
@@ -14,12 +12,8 @@ import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.DB_Entities.Mentor;
 import com.example.te_scheduler_c196.DB_Entities.Note;
 import com.example.te_scheduler_c196.DB_Entities.Term;
-import com.example.te_scheduler_c196.MainActivity;
-import com.example.te_scheduler_c196.Utility.PopulateDb;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class AppRepository {
     private static final String TAG = AppRepository.class.getSimpleName();
@@ -158,6 +152,14 @@ public class AppRepository {
     public LiveData<List<Course>> getAllCoursesByTerm(int termId){
         return courseDao.getAllCoursesByTerm(termId);
     }
+
+    public int getCourseCountByTerm(int termId){
+        return courseDao.getCourseCountByTerm(termId);
+    }
+
+//    public int getCourseCountByTerm2(int termId){
+//       return new GetCourseCountByTermAsyncTask(courseDao, termId).execute();
+//    }
 
 
     ///////Mentor modifications accessible by rest of the app
@@ -373,6 +375,27 @@ public class AppRepository {
             } catch (SQLiteConstraintException e) {
                 e.printStackTrace();
                 Log.e(TAG, "DeleteAllCourses failed");
+            }
+            return null;
+        }
+    }
+
+    public static class GetCourseCountByTermAsyncTask extends AsyncTask<Void, Void, Void>{
+        private CourseDao courseDao;
+        int test;
+        //private int test;
+        private GetCourseCountByTermAsyncTask(CourseDao courseDao, int test){
+            this.courseDao=courseDao;
+            this.test = test;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                courseDao.getCourseCountByTerm(test);
+            }catch (Exception e){
+                e.printStackTrace();
+                Log.e(TAG, "GetCourseCountByTerm failed");
             }
             return null;
         }

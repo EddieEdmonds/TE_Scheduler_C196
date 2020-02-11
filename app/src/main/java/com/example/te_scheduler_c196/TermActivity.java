@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -30,14 +31,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class TermActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = TermActivity.class.getSimpleName();
     private LiveData<List<Term>> allTerms;
     public static final int ADD_TERM_REQUEST = 1;
     public static final int EDIT_TERM_REQUEST = 2;
 
     private TermViewModel termViewModel;
+
+    private int courseCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,37 +81,31 @@ public class TermActivity extends AppCompatActivity {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                Term checkTerm = termAdapter.getTermAt(viewHolder.getAdapterPosition());
+                int termId = checkTerm.getTerm_id();
+
+                Executor executor = Executors.newSingleThreadExecutor();
+                CourseViewModel courseViewModel = ViewModelProviders.of(TermActivity.this).get(CourseViewModel.class);
+                executor.execute(() -> {
+                    Looper.prepare();
+                    int test = courseViewModel.getCourseCountByTerm(termId);
+                    if (test > 0) {
+                        termAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                        Toast.makeText(TermActivity.this, "There appear to be courses in this term.", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Course count: " + test);
+                    }else{
+                        termViewModel.deleteTerm(checkTerm);
+                        Log.i(TAG, "Course count: " + courseCount);
+                        Toast.makeText(TermActivity.this, "Term Deleted", Toast.LENGTH_SHORT).show();
+                    }
+                    Looper.loop();
+                });
             }
 
-
             @Override
-            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
-                //onSwipe for delete of a term.
-                //We obtain the term we want to check here.
-                Term checkTerm = termAdapter.getTermAt(viewHolder.getAdapterPosition());
-                //Get the termId from the term object we're checking.
-                int termId = checkTerm.getTerm_id();
-                //Then we have to access our courseViewModel to run a method that gets all courses associated with a term and ads them to a LiveData<List<Course>>
-                //We need to observe the LiveData we are returned and see what's inside it.
-                CourseViewModel courseViewModel = ViewModelProviders.of(TermActivity.this).get(CourseViewModel.class);
-                courseViewModel.getAllCoursesByTerm(termId).observe(TermActivity.this, new Observer<List<Course>>() {
-                    //In the onChanged portion, we can check the size() of the list of courses.
-                    @Override
-                    public void onChanged(List<Course> courses) {
-                        //If course size is <= 0, we allow the delete. This means that no courses were returned with the termId we are deleting.
-                        if (courses.size() <= 0) {
-                            termViewModel.deleteTerm(termAdapter.getTermAt(viewHolder.getAdapterPosition()));
-                            Toast.makeText(TermActivity.this, "Term Deleted", Toast.LENGTH_SHORT).show();
-                        } else {
-                            //If we enter the else statement, we say we can't delete.
-                            termAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
-                            Toast.makeText(TermActivity.this, "There appear to be courses in this term.", Toast.LENGTH_SHORT).show();
-                            Log.i(TAG, "Course count: " + courses.size());
-                        }
-                    }
-                });
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
             }
         }).attachToRecyclerView(termRecyclerView);
 
@@ -143,7 +142,7 @@ public class TermActivity extends AppCompatActivity {
             Date termStartDate = DateUtil.stringToDateConverter(term_start_date);
             Date termEndDate = DateUtil.stringToDateConverter(term_end_date);
 
-            Term term = null;
+            Term term;
             try {
                 term = new Term(term_title, termStartDate, termEndDate);
                 termViewModel.insertTerm(term);

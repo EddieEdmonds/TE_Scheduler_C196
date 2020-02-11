@@ -31,6 +31,7 @@ public class PopulateDb {
         List<Term> terms = new ArrayList<>();
         terms.add(new Term(SAMPLE_TITLE +"1", getDate(0), getDate(100)));
         terms.add(new Term(SAMPLE_TITLE +"2", getDate(100), getDate(200)));
+        terms.add(new Term("B", getDate(100), getDate(200)));
         System.out.println(terms);
         return terms;
     }
@@ -54,6 +55,7 @@ public class PopulateDb {
         courses.add(new Course(SAMPLE_COURSE_TITLE +"6",getDate(10),getDate(20),"Dropped",2,2));
         courses.add(new Course(SAMPLE_COURSE_TITLE +"7",getDate(100),getDate(110),"Dropped",2,2));
         courses.add(new Course(SAMPLE_COURSE_TITLE +"8",getDate(110),getDate(120),"Plan to Take",2,3));
+        courses.add(new Course("bb",getDate(0),getDate(10),"Completed",3,1));
 
         return courses;
     }
@@ -71,9 +73,9 @@ public class PopulateDb {
 
     public static List<Assessment> popAssessments(){
         List<Assessment> assessments = new ArrayList<>();
-        assessments.add(new Assessment("A",SAMPLE_ASSESSMENT_TITLE+"1",getDate(100),getDate(90),1));
-        assessments.add(new Assessment("O",SAMPLE_ASSESSMENT_TITLE+"2",getDate(100),getDate(90),1));
-        assessments.add(new Assessment("O",SAMPLE_ASSESSMENT_TITLE+"3",getDate(100),getDate(90),2));
+        assessments.add(new Assessment("Performance",SAMPLE_ASSESSMENT_TITLE+"1",getDate(100),getDate(90),1));
+        assessments.add(new Assessment("Objective",SAMPLE_ASSESSMENT_TITLE+"2",getDate(100),getDate(90),1));
+        assessments.add(new Assessment("Objective",SAMPLE_ASSESSMENT_TITLE+"3",getDate(100),getDate(90),2));
 
         return assessments;
     }

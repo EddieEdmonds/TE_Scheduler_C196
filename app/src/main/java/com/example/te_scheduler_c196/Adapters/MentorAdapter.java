@@ -1,32 +1,28 @@
 package com.example.te_scheduler_c196.Adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.DB_Entities.Mentor;
-import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Database.AppRepository;
 import com.example.te_scheduler_c196.R;
-import com.example.te_scheduler_c196.ViewModels.MentorViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHolder> {
     private static final String TAG = AppRepository.class.getSimpleName();
-    private MentorAdapter.onMentorClickListener listener;
+
+    private OnMentorClickListener listener;
 
 
     private List<Mentor> mentorList = new ArrayList<>();
-    private List<Course> courseList = new ArrayList<>();
+
 
     class MentorHolder extends RecyclerView.ViewHolder{
         private TextView textViewMentorName;
@@ -34,11 +30,21 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
         private TextView textViewMentorEmail;
 
 
-        public MentorHolder(@NonNull View itemView) {
+        MentorHolder(@NonNull View itemView) {
             super(itemView);
             textViewMentorName = itemView.findViewById(R.id.textView_mentor_name);
             textViewMentorPhone = itemView.findViewById(R.id.textView_mentor_phone);
             textViewMentorEmail = itemView.findViewById(R.id.textView_mentor_email);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
+                        listener.onMentorClick(mentorList.get(position));
+                    }
+                }
+            });
         }
     }
 
@@ -47,7 +53,7 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
     public MentorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.mentor_item, parent, false);
-        return new MentorAdapter.MentorHolder(itemView);
+        return new MentorHolder(itemView);
     }
 
     @Override
@@ -64,16 +70,18 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
         return mentorList.size();
     }
 
-    public void setMentors(List<Mentor> mentors){
+    public void setMentorList(List<Mentor> mentors){
         this.mentorList = mentors;
         notifyDataSetChanged();
     }
 
-    public interface onMentorClickListener{
+    public Mentor getMentorAt(int position){return mentorList.get(position);}
+
+    public interface OnMentorClickListener {
         void onMentorClick(Mentor mentor);
     }
 
-    public void setOnMentorClickListener(onMentorClickListener listener){
+    public void setOnMentorClickListener(OnMentorClickListener listener){
         this.listener = listener;
     }
 

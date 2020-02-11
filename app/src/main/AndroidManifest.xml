@@ -11,7 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
         <!-- ********Main Activity******** -->
         <activity
             android:name=".MainActivity"
@@ -97,10 +96,26 @@
         <activity
             android:name=".NoteAddActivity"
             android:label="Add Note"
-            android:parentActivityName=".CourseDetailActivity">
+            android:parentActivityName=".CourseActivity">
             <meta-data
                 android:name="PARENT_ACTIVITY"
-                android:value="com.example.te_scheduler_c196.CourseDetailActivity" />
+                android:value="com.example.te_scheduler_c196.CourseActivity" />
+        </activity> <!-- ********Assessment Add Activity******** -->
+        <activity
+            android:name=".AssessmentAddEditActivity"
+            android:label="Add Assessment"
+            android:parentActivityName=".AssessmentActivity">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
+                android:value="com.example.te_scheduler_c196.AssessmentActivity" />
+        </activity><!-- ********Mentor Add Activity******** -->
+        <activity
+            android:name=".MentorAddEditActivity"
+            android:label="Add Mentor"
+            android:parentActivityName=".MentorActivity">
+            <meta-data
+                android:name="PARENT_ACTIVITY"
+                android:value="com.example.te_scheduler_c196.MentorActivity" />
 
         </activity>
     </application>

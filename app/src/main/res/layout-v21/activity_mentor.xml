@@ -5,41 +5,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TermActivity">
-
+    tools:context=".MentorActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!--tools:listitem is only used for the preview window while developing.
-             Has nothing to do with actual functionality of the app.-->
+            android:orientation="vertical"
+            android:scrollbars="none">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/term_recycler_view"
+                android:id="@+id/mentor_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_anchorGravity="center"
-                tools:listitem="@layout/term_item"/>
-
-
+                tools:listitem="@layout/mentor_item" />
         </RelativeLayout>
-
     </ScrollView>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_term"
+        android:id="@+id/btn_add_mentor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="32dp"
-        android:background="@color/colorPrimary"
-        app:backgroundTint="@color/colorPrimaryLight"
-        app:rippleColor="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryLight"
         android:src="@drawable/ic_add" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

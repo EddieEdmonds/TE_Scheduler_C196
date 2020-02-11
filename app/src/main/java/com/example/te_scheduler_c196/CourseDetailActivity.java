@@ -1,5 +1,6 @@
 package com.example.te_scheduler_c196;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,15 +8,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,7 +60,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
+        //Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
         final Intent courseData = getIntent();
 
         //Finding view items for editing the term.
@@ -105,7 +107,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         mentorViewModel.getMentorById(mentorId).observe(this, new Observer<List<Mentor>>() {
             @Override
             public void onChanged(@Nullable List<Mentor> mentorList) {
-                mentorAdapter.setMentors(mentorList);
+                mentorAdapter.setMentorList(mentorList);
 //                mentorAdapter.notifyDataSetChanged();
             }
         });
@@ -133,6 +135,48 @@ public class CourseDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        ///////////////////////////On swipe event for deleting a course in the TermEditActivity.//////////////////////////////
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                0,
+                ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                //onSwipe for delete of a Note in the TermEditActivity.
+                //We grab the note that we swiped on.
+                final Note swipedNote = noteAdapter.getNoteAt(viewHolder.getAdapterPosition());
+
+                //We pop a dialog letting users know that Notes and Assessments will be deleted as well.
+                AlertDialog.Builder builder = new AlertDialog.Builder(viewHolder.itemView.getContext())
+                        .setMessage("Delete this note?");
+
+                //If they click positive button: note, note, and assessments deleted
+                // Note deleted via the below deleteNote method.
+                // Notes and Assessments deleted through "on delete CASCADE" in the respective DAOs.
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        // Your action
+                        noteViewModel.deleteNote(swipedNote);
+                        dialog.cancel();
+                    }
+                });
+                //If you click cancel, view is refreshed and note is returned.
+                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        noteAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            }
+        }).attachToRecyclerView(rvNotesForCourse);
     }
 
     @Override
@@ -199,7 +243,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                 final MentorAdapter mentorAdapter = new MentorAdapter();
                 rvMentorForCourse.setAdapter(mentorAdapter);
                 final MentorViewModel mentorViewModel = ViewModelProviders.of(this).get(MentorViewModel.class);
-                mentorViewModel.getMentorById(fk_courseMentorId).observe(this, mentorAdapter::setMentors);
+                mentorViewModel.getMentorById(fk_courseMentorId).observe(this, mentorAdapter::setMentorList);
 
 
                 try {
