@@ -6,12 +6,13 @@ import com.example.te_scheduler_c196.MainActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class DateUtil {
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = DateUtil.class.getSimpleName();
 
     //static String dateFormattedShort;
 
@@ -51,5 +52,14 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         String dateString;
         return dateString = sdf.format(date);
+    }
+
+    public static Date getCurrentDate() {
+        return new Date();
+    }
+
+    public static Boolean compareDates(Date date1, Date date2){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
+        return sdf.format(date1).equals(sdf.format(date2));
     }
 }

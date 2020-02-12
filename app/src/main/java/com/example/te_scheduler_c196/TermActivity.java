@@ -3,7 +3,6 @@ package com.example.te_scheduler_c196;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -12,23 +11,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.te_scheduler_c196.Adapters.CourseAdapter;
 import com.example.te_scheduler_c196.Adapters.TermAdapter;
-import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Utility.DateUtil;
 import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 import com.example.te_scheduler_c196.ViewModels.TermViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -61,7 +56,7 @@ public class TermActivity extends AppCompatActivity {
         termViewModel.getAllTerms().observe(this, new Observer<List<Term>>() {
             @Override
             public void onChanged(List<Term> termList) {
-                termAdapter.setTerms(termList);
+                termAdapter.setTermList(termList);
 
             }
         });
@@ -111,14 +106,14 @@ public class TermActivity extends AppCompatActivity {
 
         termAdapter.setOnTermClickListener(new TermAdapter.onTermClickListener() {
             @Override
-            //Edit term onClick method. Passes these extras to Edit Term based on which one we click on.
-            //EXTRA_TERM_ID should pass the term id to the new TermEditActivity that is opened.
             public void onTermClick(Term term) {
                 Intent intent = new Intent(TermActivity.this, TermEditActivity.class);
+
                 intent.putExtra(TermAddActivity.EXTRA_TERM_ID, term.getTerm_id());
                 intent.putExtra(TermAddActivity.EXTRA_TERM_TITLE, term.getTerm_title());
                 intent.putExtra(TermAddActivity.EXTRA_TERM_START_DATE, DateUtil.dateToString(term.getTerm_start_date()));
                 intent.putExtra(TermAddActivity.EXTRA_TERM_END_DATE, DateUtil.dateToString(term.getTerm_end_date()));
+
                 startActivityForResult(intent, EDIT_TERM_REQUEST);
             }
         });

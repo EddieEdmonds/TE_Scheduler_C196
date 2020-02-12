@@ -20,32 +20,29 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
 
     private OnMentorClickListener listener;
 
-
     private List<Mentor> mentorList = new ArrayList<>();
 
 
     class MentorHolder extends RecyclerView.ViewHolder{
-        private TextView textViewMentorName;
-        private TextView textViewMentorPhone;
-        private TextView textViewMentorEmail;
+        private TextView tvMentorName, tvMentorPhone, tvMentorEmail;
 
-
-        MentorHolder(@NonNull View itemView) {
+        public MentorHolder(@NonNull View itemView) {
             super(itemView);
-            textViewMentorName = itemView.findViewById(R.id.textView_mentor_name);
-            textViewMentorPhone = itemView.findViewById(R.id.textView_mentor_phone);
-            textViewMentorEmail = itemView.findViewById(R.id.textView_mentor_email);
+            tvMentorName = itemView.findViewById(R.id.tv_mentor_name);
+            tvMentorPhone = itemView.findViewById(R.id.tv_mentor_phone);
+            tvMentorEmail = itemView.findViewById(R.id.tv_mentor_email);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
-                        listener.onMentorClick(mentorList.get(position));
-                    }
+                    listener.onMentorClick(mentorList.get(position));
                 }
             });
+
         }
+
+
     }
 
     @NonNull
@@ -53,16 +50,17 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
     public MentorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.mentor_item, parent, false);
+
+
         return new MentorHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MentorHolder holder, int position) {
         Mentor currentMentor = mentorList.get(position);
-        holder.textViewMentorName.setText(currentMentor.getMentor_name());
-        holder.textViewMentorEmail.setText(currentMentor.getMentor_email());
-        holder.textViewMentorPhone.setText(currentMentor.getMentor_phone());
-
+        holder.tvMentorName.setText(currentMentor.getMentor_name());
+        holder.tvMentorPhone.setText(currentMentor.getMentor_email());
+        holder.tvMentorEmail.setText(currentMentor.getMentor_phone());
     }
 
     @Override
@@ -78,8 +76,10 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
     public Mentor getMentorAt(int position){return mentorList.get(position);}
 
     public interface OnMentorClickListener {
-        void onMentorClick(Mentor mentor);
+        void onMentorClick (Mentor mentor);
     }
+
+
 
     public void setOnMentorClickListener(OnMentorClickListener listener){
         this.listener = listener;

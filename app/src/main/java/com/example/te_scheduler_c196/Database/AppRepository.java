@@ -38,6 +38,8 @@ public class AppRepository {
     private LiveData<List<Note>> allNotes;
     private LiveData<List<Term>> allTerms;
 
+    private List<Course> allCourseList;
+
     private String courseTitle;
 
 
@@ -64,15 +66,6 @@ public class AppRepository {
         termCount = termDao.getTermCount();
     }
 
-//////Public facing "API" to be used outside the repository and ROOM setup.
-    //These are running as AsyncTask since they are small, quick queries.  If this was a much larger app,
-    //using a library like "Executor" would be a better option.
-
-    //Fill database
-//    public void populateDb(){
-//        executor.execute(new termDao.popTerms(););
-//    }
-
 
     //Clear database
     public void emptyDatabase() {
@@ -89,7 +82,7 @@ public class AppRepository {
         }
     }
 
-    //////Assessment modifications accessible by the rest of the app.
+////////////Assessment modifications accessible by the rest of the app.////////////
     public void insertAssessment(Assessment assessment) {
         new InsertAssessmentAsyncTask(assDao).execute(assessment);
     }
@@ -123,8 +116,7 @@ public class AppRepository {
         return assDao.getAllAssessmentsByCourse(courseId);
     }
 
-
-    //////Course modifications accessible by rest of the app
+////////////Course modifications accessible by rest of the app////////////
     public void insertCourse(Course course) {
         new InsertCourseAsyncTask(courseDao).execute(course);
     }
@@ -157,12 +149,14 @@ public class AppRepository {
         return courseDao.getCourseCountByTerm(termId);
     }
 
-//    public int getCourseCountByTerm2(int termId){
-//       return new GetCourseCountByTermAsyncTask(courseDao, termId).execute();
-//    }
+    public List<Course> getAllCourseList(){
+        //new GetCourseListAsyncTask(courseDao).execute();
+        return courseDao.getCourseList();
+    }
 
 
-    ///////Mentor modifications accessible by rest of the app
+
+/////////////Mentor modifications accessible by rest of the app////////////
     public void insertMentor(Mentor mentor) {
         new InsertMentorAsyncTask(mentorDao).execute(mentor);
     }
@@ -191,7 +185,7 @@ public class AppRepository {
         return mentorDao.getMentorById(mentorId);
     }
 
-    ///////Note modifications accessible by rest of the app
+////////////Note modifications accessible by rest of the app////////////
     public void insertNote(Note note) {
         new InsertNoteAsyncTask(noteDao).execute(note);
     }
@@ -220,7 +214,7 @@ public class AppRepository {
         return noteDao.getNotesByCourse(courseId);
     }
 
-    //////Term modifications accessible by rest of the app
+////////////Term modifications accessible by rest of the app////////////
     public void insertTerm(Term term) {
         new InsertTermAsyncTask(termDao).execute(term);
     }
@@ -380,22 +374,19 @@ public class AppRepository {
         }
     }
 
-    public static class GetCourseCountByTermAsyncTask extends AsyncTask<Void, Void, Void>{
+    public static class GetCourseListAsyncTask extends AsyncTask<Void, Void, Void>{
         private CourseDao courseDao;
-        int test;
-        //private int test;
-        private GetCourseCountByTermAsyncTask(CourseDao courseDao, int test){
-            this.courseDao=courseDao;
-            this.test = test;
+
+        public GetCourseListAsyncTask(CourseDao courseDao) {
+            this.courseDao = courseDao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                courseDao.getCourseCountByTerm(test);
+                courseDao.getCourseList();
             }catch (Exception e){
                 e.printStackTrace();
-                Log.e(TAG, "GetCourseCountByTerm failed");
             }
             return null;
         }

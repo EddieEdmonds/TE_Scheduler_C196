@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.te_scheduler_c196.Adapters.MentorAdapter;
@@ -23,11 +24,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class MentorActivity extends AppCompatActivity{
+    private static final String TAG = MentorActivity.class.getSimpleName();
 
     public static final int ADD_MENTOR_REQUEST = 8;
     public static final int EDIT_MENTOR_REQUEST = 9;
 
     private MentorViewModel mentorViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,7 @@ public class MentorActivity extends AppCompatActivity{
         mentorAdapter.setOnMentorClickListener(new MentorAdapter.OnMentorClickListener(){
             @Override
             public void onMentorClick(Mentor mentor) {
+                Log.i(TAG, "do we get here?");
                 Intent intent = new Intent(MentorActivity.this, MentorAddEditActivity.class);
 
                 intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_ID, mentor.getMentor_id());
@@ -103,9 +107,10 @@ public class MentorActivity extends AppCompatActivity{
                 intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_PHONE, mentor.getMentor_phone());
                 intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_EMAIL, mentor.getMentor_email());
 
-                startActivityForResult(intent, EDIT_MENTOR_REQUEST);
+                startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -130,6 +135,7 @@ public class MentorActivity extends AppCompatActivity{
             }
         }
     }
+
 
 
 }

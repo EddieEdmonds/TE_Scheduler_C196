@@ -1,5 +1,8 @@
 package com.example.te_scheduler_c196;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -23,9 +28,12 @@ import com.example.te_scheduler_c196.Utility.DateUtil;
 import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.te_scheduler_c196.App.CHANNEL_1_ID;
+import static com.example.te_scheduler_c196.App.CHANNEL_2_ID;
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_ID;
 
 public class CourseActivity extends AppCompatActivity {
@@ -35,14 +43,22 @@ public class CourseActivity extends AppCompatActivity {
 
     private AlertDialog alertDialog;
 
+    private NotificationManagerCompat notificationManager;
+
     //private LiveData<List<Course>> allCourses;
     public static final int ADD_COURSE_REQUEST = 3;
     public static final int EDIT_COURSE_REQUEST = 4;
+    //This id gets updated each time a notification is sent out so they're always unique.
+//    int notificationId = 1;
+
+    private List<Course> myCourseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
+
+        notificationManager = NotificationManagerCompat.from(this);
 
         RecyclerView courseRecyclerView = findViewById(R.id.course_recycler_view);
         courseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,6 +74,8 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Course> courseList) {
                 courseAdapter.setCourseList(courseList);
+                assert courseList != null;
+                myCourseList.addAll(courseList);
             }
         });
 
@@ -159,12 +177,59 @@ public class CourseActivity extends AppCompatActivity {
                 intent.putExtra(CourseAddActivity.EXTRA_COURSE_MENTOR_ID, course.getFk_mentor_id());
                 intent.putExtra(CourseAddActivity.EXTRA_COURSE_TERM_ID, course.getFk_term_id());
 
+//                Course courseTest = myCourseList.get(0);
+//                Date test = courseTest.getCourse_start();
+//                Log.i(TAG, "Current date: " + DateUtil.getCurrentDate());
+//                Log.i(TAG, "Course Date: "+test);
+
+//                sendOnChannel1();
                 startActivity(intent);
 
             }
         });
 
+
     }
+
+//    public void sendOnChannel1(){
+//        Date currentDate = DateUtil.getCurrentDate();
+//        for(Course c:myCourseList){
+//            if(c.getCourse_start().equals(currentDate)){
+//                String courseTitle = c.getCourse_title();
+//                String message = courseTitle+" starts today";
+//
+//                Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+//                        .setSmallIcon(R.drawable.ic_course_icon)
+//                        .setContentTitle(courseTitle)
+//                        .setContentText(message)
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                        .build();
+//
+//                notificationManager.notify(notificationId, notification);
+//                notificationId++;
+//            }
+//        }
+//    }
+
+
+//    public void sendOnChannel2(View v){
+//        Date currentDate = DateUtil.getCurrentDate();
+//        for(Course c:myCourseList){
+//            if(c.getCourse_end().equals(currentDate)){
+//                String courseTitle = c.getCourse_title();
+//                String message = courseTitle+" ends today";
+//
+//                Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
+//                        .setSmallIcon(R.drawable.ic_course_icon)
+//                        .setContentTitle(courseTitle)
+//                        .setContentText(message)
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                        .build();
+//                notificationManager.notify(notificationId, notification);
+//                notificationId++;
+//            }
+//        }
+//    }
 
     @Override
     public void onPause(){

@@ -188,7 +188,7 @@ public class AssessmentAddEditActivity extends AppCompatActivity {
             }
         };
 
-        ///////////////////////////Gets all mentors and adds them to the mentor spinner list///////////////////////////////
+///////////////////////////Gets all Courses and adds them to the course spinner list///////////////////////////////
         final ArrayAdapter<String> sp_CourseListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spCourseList);
         sp_CourseListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_Courses.setAdapter(sp_CourseListAdapter);

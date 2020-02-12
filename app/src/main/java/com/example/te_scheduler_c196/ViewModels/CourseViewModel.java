@@ -63,5 +63,9 @@ public class CourseViewModel extends AndroidViewModel {
         return test[0];
     }
 
+    public List<Course> allCourseList(){
+        return repository.getAllCourseList();
+    }
+
 
 }

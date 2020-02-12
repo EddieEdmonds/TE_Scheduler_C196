@@ -1,14 +1,11 @@
 package com.example.te_scheduler_c196.DB_Entities;
 
-import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-import static androidx.room.ForeignKey.CASCADE;
-import static androidx.room.ForeignKey.RESTRICT;
 import static androidx.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "course_table",

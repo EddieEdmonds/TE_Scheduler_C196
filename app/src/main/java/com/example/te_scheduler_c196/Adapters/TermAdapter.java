@@ -3,8 +3,6 @@ package com.example.te_scheduler_c196.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +29,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
+                    if(listener!=null && position!=RecyclerView.NO_POSITION){
                         listener.onTermClick(termList.get(position));
                     }
                 }
@@ -58,7 +56,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
         return termList.size();
     }
 
-    public void setTerms(List<Term> terms){
+    public void setTermList(List<Term> terms){
         this.termList = terms;
         notifyDataSetChanged();
     }
@@ -66,9 +64,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermHolder> {
     public Term getTermAt(int position){
         return termList.get(position);
     }
-
-
-
 
     public interface onTermClickListener{
         void onTermClick(Term term);
