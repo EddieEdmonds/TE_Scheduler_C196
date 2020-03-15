@@ -1,23 +1,17 @@
 package com.example.te_scheduler_c196.Adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.te_scheduler_c196.DB_Entities.Assessment;
 import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.Database.AppRepository;
 import com.example.te_scheduler_c196.R;
-import com.example.te_scheduler_c196.ViewModels.AssessmentViewModel;
-import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.AssessmentHolder>{
-    private static final String TAG = AppRepository.class.getSimpleName();
+    private static final String TAG = AssessmentAdapter.class.getSimpleName();
 
     private  onAssClickListener listener;
 

@@ -1,7 +1,6 @@
 package com.example.te_scheduler_c196.DB_Entities;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "mentor_table")
@@ -21,7 +20,6 @@ public class Mentor {
     }
 
     public void setMentor_id(int mentor_id) {
-
         this.mentor_id = mentor_id;
     }
 

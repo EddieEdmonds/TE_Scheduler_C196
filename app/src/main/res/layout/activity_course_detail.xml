@@ -135,10 +135,9 @@
                         android:id="@+id/rv_mentor_for_course"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_mentor_title"
-                        tools:itemCount="1"
-                        tools:listitem="@layout/recycler_view_item"
-                        android:elevation="3dp"/>
+                        app:layout_anchorGravity="center"
+                        android:layout_below="@+id/tv_mentor_title" />
+
                 </RelativeLayout>
 
 
@@ -164,7 +163,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_anchorGravity="center"
-                    tools:listitem="@layout/note_item"
                     android:layout_below="@+id/tv_course_notes"/>
 
 

@@ -157,9 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_mentor_title"
-                        android:elevation="3dp"
-                        tools:itemCount="1"
-                        tools:listitem="@layout/recycler_view_item" />
+                        android:elevation="3dp" />
                 </RelativeLayout>
 
 

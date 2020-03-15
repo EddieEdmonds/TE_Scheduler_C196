@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 public class MentorAddEditActivity extends AppCompatActivity {
+    private static final String TAG = MentorAddEditActivity.class.getSimpleName();
 
     public static final String EXTRA_MENTOR_ID = "com.example.te_scheduler_c196.EXTRA_MENTOR_ID";
     public static final String EXTRA_MENTOR_NAME = "com.example.te_scheduler_c196.EXTRA_MENTOR_NAME";

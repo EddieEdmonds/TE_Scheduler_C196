@@ -19,9 +19,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.te_scheduler_c196.DB_Entities.Assessment;
 import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.Utility.DateUtil;
 import com.example.te_scheduler_c196.Utility.MyNotification;
+import com.example.te_scheduler_c196.ViewModels.AssessmentViewModel;
 import com.example.te_scheduler_c196.ViewModels.CourseViewModel;
 import com.example.te_scheduler_c196.ViewModels.MainViewModel;
 
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MainViewModel mainViewModel;
 
+    PendingIntent myPendingIntent;
+    PendingIntent myPendingIntent2;
+
 
     //Grabs the count of each table from the DB. There is a getNoteCount()
     // in the appRepository if needed elsewhere.
@@ -46,24 +51,32 @@ public class MainActivity extends AppCompatActivity {
     private LiveData<Integer> assCount;
 
     private List<Course> myCourseList = new ArrayList<>();
+    private List<Assessment> myAssList = new ArrayList<>();
 
     ArrayList<MyNotification> nList1 = new ArrayList<>();
     ArrayList<MyNotification> nList2 = new ArrayList<>();
+    ArrayList<MyNotification> nList3 = new ArrayList<>();
 
     private TextView termCountView, courseCountView, assCountView, mentorCountView;
 
-    PendingIntent myPendingIntent;
+
     AlarmManager alarmManager;
+    AlarmManager alarmManager2;
     NotificationBroadcast myBroadcastReceiver;
+    NotificationBroadcast2 myBroadcastReceiver2;
     Calendar firingCal;
 
     CourseViewModel courseViewModel;
+    AssessmentViewModel assViewModel;
     private AlertDialog alertDialog;
     private NotificationManagerCompat notificationManager;
     int notificationId = 1;
 
-    Bundle bundle1 = new Bundle();
+    Bundle bundle = new Bundle();
     Bundle bundle2 = new Bundle();
+    Bundle bundle3 = new Bundle();
+
+    private ImageButton btnMentor;
 
     private View.OnClickListener emptyDbListener = new View.OnClickListener() {
         @Override
@@ -77,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,17 +110,30 @@ public class MainActivity extends AppCompatActivity {
         mentorCountView = findViewById(R.id.mentor_count);
 
         ImageButton emptyDbButton = findViewById(R.id.btn_emptyDatabase);
+        btnMentor = findViewById(R.id.btn_mentors);
 
         if (emptyDbButton != null) {
             emptyDbButton.setOnClickListener(emptyDbListener);
         }
+
+
+        assViewModel = ViewModelProviders.of(this).get(AssessmentViewModel.class);
+        assViewModel.getAllAssessments().observe(this, new Observer<List<Assessment>>() {
+            @Override
+            public void onChanged(@Nullable List<Assessment> assessmentList) {
+                assert assessmentList != null;
+                myAssList.addAll(assessmentList);
+                handleAlertsForAss();
+            }
+        });
+
         courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         courseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
             @Override
             public void onChanged(@Nullable List<Course> courseList) {
                 assert courseList != null;
                 myCourseList.addAll(courseList);
-                handleAlerts();
+                handleAlertsForCourses();
             }
         });
 
@@ -115,26 +142,68 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-            try{
-                unregisterReceiver(myBroadcastReceiver);
-                myBroadcastReceiver = null;
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-    }
-
-    private void handleAlerts() {
+    private void handleAlertsForAss() {
         firingCal = Calendar.getInstance();
-        firingCal.set(Calendar.HOUR_OF_DAY, 21); //hour of day (24 hour clock)
-        firingCal.set(Calendar.MINUTE, 58); //alarm minute
-        firingCal.set(Calendar.SECOND, 0); //seconds
+        firingCal.set(Calendar.HOUR_OF_DAY, 13); //hour of day (24 hour clock)
+        firingCal.set(Calendar.MINUTE, 27); //alarm minute
+        firingCal.set(Calendar.SECOND, 30); //seconds
+        if(Calendar.getInstance().after(firingCal)){
+            firingCal.add(Calendar.DAY_OF_MONTH, 1);
+        }
         long intendedTime = firingCal.getTimeInMillis();
 
-        NotificationBroadcast myBroadcastReceiver = new NotificationBroadcast();
-        registerReceiver(myBroadcastReceiver, new IntentFilter());
+        //NotificationBroadcast2 myBroadcastReceiver2 = new NotificationBroadcast2();
+        //registerReceiver(myBroadcastReceiver2, new IntentFilter());
+        Intent intent = new Intent().setClass(getBaseContext(), NotificationBroadcast2.class);
+
+        Date currentDate = DateUtil.getCurrentDate();
+
+        for (Assessment a : myAssList) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
+            Log.i(TAG, "Ass goal date: " + sdf.format(a.getAss_goal_date()));
+            Log.i(TAG, "Today's date: " + sdf.format(currentDate));
+
+            if (DateUtil.compareDates(a.getAss_goal_date(), currentDate)) {
+                MyNotification myNotification;
+                String assTitle = a.getAss_title();
+                String message = assTitle + " due today";
+                int id = notificationId;
+                myNotification = new MyNotification(assTitle, message, id);
+                nList3.add(myNotification);
+                notificationId++;
+                Log.i(TAG, "Assessment goal date today.");
+            } else {
+                Log.i(TAG, "No assessment goal dates today.");
+            }
+        }
+
+        if (nList3.size() > 0) {
+            bundle3.putSerializable("N_LIST_3", nList3);
+            intent.putExtra("BUNDLE3", bundle3);
+            //myPendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+            Log.i(TAG, "nList3 Main Activity: " + nList3.size());
+        }
+
+
+        alarmManager2 = (AlarmManager) (this.getSystemService(ALARM_SERVICE));
+        myPendingIntent2 = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+        assert alarmManager2 != null;
+        alarmManager2.setRepeating(AlarmManager.RTC_WAKEUP, intendedTime, AlarmManager.INTERVAL_DAY, myPendingIntent2);
+
+    }
+
+    private void handleAlertsForCourses() {
+        firingCal = Calendar.getInstance();
+        firingCal.set(Calendar.HOUR_OF_DAY, 13); //hour of day (24 hour clock)
+        firingCal.set(Calendar.MINUTE, 27); //alarm minute
+        firingCal.set(Calendar.SECOND, 0); //seconds
+        if(Calendar.getInstance().after(firingCal)){
+            firingCal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        long intendedTime = firingCal.getTimeInMillis();
+
+//        NotificationBroadcast myBroadcastReceiver = new NotificationBroadcast();
+//        registerReceiver(myBroadcastReceiver, new IntentFilter());
         Intent intent = new Intent().setClass(getBaseContext(), NotificationBroadcast.class);
 
         Date currentDate = DateUtil.getCurrentDate();
@@ -150,13 +219,10 @@ public class MainActivity extends AppCompatActivity {
                 nList1.add(myNotification);
                 notificationId++;
             } else {
-                Log.i(TAG, "Dates didn't match");
+                Log.i(TAG, "No courses start today.");
             }
         }
         for (Course c : myCourseList) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
-            Log.i(TAG, "Course end date: "+sdf.format(c.getCourse_end()));
-            Log.i(TAG, "Today's date: "+ sdf.format(currentDate));
             if (DateUtil.compareDates(c.getCourse_end(), currentDate)) {
                 MyNotification myNotification;
                 String courseTitle = c.getCourse_title();
@@ -165,19 +231,22 @@ public class MainActivity extends AppCompatActivity {
                 myNotification = new MyNotification(courseTitle, message, id);
                 nList2.add(myNotification);
                 notificationId++;
+            } else {
+                Log.i(TAG, "No courses due today.");
             }
         }
 
-        Log.i(TAG, "nList2 Main Activity: "+ nList2.size());
 
-        if(nList1.size()>0){
-            bundle1.putSerializable("N_LIST_1", nList1);
-            intent.putExtra("BUNDLE1", bundle1);
+
+        if (nList1.size() > 0) {
+            bundle.putSerializable("N_LIST_1", nList1);
+            intent.putExtra("BUNDLE", bundle);
+            Log.i(TAG, "nList1 Main Activity: " + nList1.size());
         }
-        if(nList2.size()>0){
+        if (nList2.size() > 0) {
             bundle2.putSerializable("N_LIST_2", nList2);
             intent.putExtra("BUNDLE2", bundle2);
-
+            Log.i(TAG, "nList2 Main Activity: " + nList2.size());
         }
 
 
@@ -292,6 +361,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         Toast.makeText(this, "Assessments Clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Assessments clicked");
     }
 
     public void launchMentors(View view) {
@@ -299,5 +369,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         Toast.makeText(this, "Mentors Clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Mentors clicked");
     }
 }

@@ -30,6 +30,8 @@ public class AssessmentActivity extends AppCompatActivity {
     public static final int ADD_ASS_REQUEST = 6;
     public static final int EDIT_ASS_REQUEST = 7;
 
+    private AlertDialog alertDialog;
+
     private AssessmentViewModel assessmentViewModel;
 
     @Override
@@ -101,7 +103,8 @@ public class AssessmentActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-                builder.show();
+                alertDialog = builder.show();
+                alertDialog.setCanceledOnTouchOutside(false);
             }
         }).attachToRecyclerView(assessmentRecyclerView);
 

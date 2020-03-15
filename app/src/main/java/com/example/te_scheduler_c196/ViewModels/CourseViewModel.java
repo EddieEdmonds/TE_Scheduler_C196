@@ -16,7 +16,6 @@ import java.util.concurrent.Executors;
 public class CourseViewModel extends AndroidViewModel {
     private AppRepository repository;
     private LiveData<List<Course>> allCourses;
-    //private LiveData<List<Course>> allCoursesByTerm;
 
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -24,7 +23,6 @@ public class CourseViewModel extends AndroidViewModel {
         super(application);
         repository = new AppRepository(application);
         allCourses = repository.getAllCourses();
-        //allCoursesByTerm = repository.getAllCoursesByTerm(1);
 
     }
 
@@ -46,21 +44,6 @@ public class CourseViewModel extends AndroidViewModel {
 
     public int getCourseCountByTerm(int termId){
         return repository.getCourseCountByTerm(termId);
-    }
-
-    public int getCourseCountByTerm2(int termId){
-        final int[] test = new int[1];
-        executor.execute(()->{
-            try {
-                test[0] = repository.getCourseCountByTerm(termId);
-                executor.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        });
-
-        return test[0];
     }
 
     public List<Course> allCourseList(){

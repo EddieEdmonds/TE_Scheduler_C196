@@ -56,7 +56,7 @@
                 android:layout_toRightOf="@id/term_icon"
                 android:text="@string/all_terms"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 
@@ -136,7 +136,7 @@
                 android:layout_toRightOf="@id/course_icon"
                 android:text="@string/all_courses"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 
@@ -216,7 +216,7 @@
                 android:layout_toRightOf="@id/assessments_icon"
                 android:text="@string/assessments"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 
@@ -297,7 +297,7 @@
                 android:layout_toRightOf="@id/mentor_icon"
                 android:text="@string/all_mentors"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 

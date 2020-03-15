@@ -1,5 +1,6 @@
 package com.example.te_scheduler_c196.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.te_scheduler_c196.DB_Entities.Mentor;
-import com.example.te_scheduler_c196.Database.AppRepository;
 import com.example.te_scheduler_c196.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHolder> {
-    private static final String TAG = AppRepository.class.getSimpleName();
+    private static final String TAG = MentorAdapter.class.getSimpleName();
 
     private OnMentorClickListener listener;
 
@@ -26,7 +26,7 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
     class MentorHolder extends RecyclerView.ViewHolder{
         private TextView tvMentorName, tvMentorPhone, tvMentorEmail;
 
-        public MentorHolder(@NonNull View itemView) {
+        MentorHolder(@NonNull View itemView) {
             super(itemView);
             tvMentorName = itemView.findViewById(R.id.tv_mentor_name);
             tvMentorPhone = itemView.findViewById(R.id.tv_mentor_phone);
@@ -36,31 +36,31 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    listener.onMentorClick(mentorList.get(position));
+                    if(listener!=null&&position!=RecyclerView.NO_POSITION){
+                        listener.onMentorClick(mentorList.get(position));
+                    }else{
+                        Log.i(TAG, "hmmmmm");
+                    }
                 }
             });
-
         }
-
-
     }
 
     @NonNull
     @Override
-    public MentorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MentorAdapter.MentorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.mentor_item, parent, false);
-
-
-        return new MentorHolder(itemView);
+        return new MentorAdapter.MentorHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MentorHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MentorAdapter.MentorHolder holder, int position) {
         Mentor currentMentor = mentorList.get(position);
+
         holder.tvMentorName.setText(currentMentor.getMentor_name());
-        holder.tvMentorPhone.setText(currentMentor.getMentor_email());
-        holder.tvMentorEmail.setText(currentMentor.getMentor_phone());
+        holder.tvMentorPhone.setText(currentMentor.getMentor_phone());
+        holder.tvMentorEmail.setText(currentMentor.getMentor_email());
     }
 
     @Override
@@ -75,10 +75,9 @@ public class MentorAdapter extends RecyclerView.Adapter<MentorAdapter.MentorHold
 
     public Mentor getMentorAt(int position){return mentorList.get(position);}
 
-    public interface OnMentorClickListener {
+    public interface OnMentorClickListener{
         void onMentorClick (Mentor mentor);
     }
-
 
 
     public void setOnMentorClickListener(OnMentorClickListener listener){

@@ -26,30 +26,29 @@ public class TermViewModel extends AndroidViewModel {
         termByid = repository.getTermById(-1);
     }
 
-    public void insertTerm(Term term){
+    public void insertTerm(Term term) {
         repository.insertTerm(term);
     }
 
-    public void deleteTerm(Term term){
+    public void deleteTerm(Term term) {
         repository.deleteTerm(term);
     }
 
-    public void updateTerm(Term term){
+    public void updateTerm(Term term) {
         repository.updateTerm(term);
     }
 
-    public LiveData<List<Term>> getAllTerms(){
+    public LiveData<List<Term>> getAllTerms() {
         return allTerms;
     }
 
-    public LiveData<List<Course>> getAllCoursesForTerm(int termId){
+    public LiveData<List<Course>> getAllCoursesForTerm(int termId) {
         return allCoursesForTerm = repository.getAllCoursesByTerm(termId);
     }
 
-    public LiveData<List<Term>> getTermByid(int termId){
+    public LiveData<List<Term>> getTermById(int termId) {
         return termByid = repository.getTermById(termId);
     }
-
 
 
 }

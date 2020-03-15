@@ -65,6 +65,8 @@ public class TermEditActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener startDateSetListener;
     private DatePickerDialog.OnDateSetListener endDateSetListener;
 
+    private AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -291,7 +293,8 @@ public class TermEditActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-                builder.show();
+                alertDialog = builder.show();
+                alertDialog.setCanceledOnTouchOutside(false);
             }
         }).attachToRecyclerView(courseForTermRecyclerView);
 

@@ -11,6 +11,7 @@ import com.example.te_scheduler_c196.DB_Entities.Mentor;
 import com.example.te_scheduler_c196.DB_Entities.Term;
 import com.example.te_scheduler_c196.Database.AppRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MentorViewModel extends AndroidViewModel {
@@ -22,7 +23,6 @@ public class MentorViewModel extends AndroidViewModel {
         super(application);
         repository = new AppRepository(application);
         allMentors = repository.getAllMentors();
-        allMentorById = repository.getMentorById(1);
     }
 
     public void insertMentor(Mentor mentor){

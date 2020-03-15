@@ -6,11 +6,6 @@
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
     android:orientation="vertical">
-    <ImageButton
-        android:id="@+id/btn_mentor"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

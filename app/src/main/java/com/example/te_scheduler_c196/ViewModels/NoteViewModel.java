@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.DB_Entities.Note;
 import com.example.te_scheduler_c196.Database.AppRepository;
 

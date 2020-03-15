@@ -5,7 +5,6 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
-import static androidx.room.ForeignKey.SET_NULL;
 
 @Entity(tableName = "note_table",
         foreignKeys = @ForeignKey(entity = Course.class, childColumns = "fk_course_id", parentColumns = "course_id", onDelete = CASCADE))
@@ -29,7 +28,6 @@ public class Note {
     public void setNote_id(int note_id) {
         this.note_id = note_id;
     }
-
 
     public int getNote_id() {
         return note_id;

@@ -1,13 +1,7 @@
 package com.example.te_scheduler_c196.Utility;
 
-import android.util.Log;
-
-import com.example.te_scheduler_c196.MainActivity;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -31,7 +25,6 @@ public class DateUtil {
         assert dateFormattedLong != null;
         return sdf.format(dateFormattedLong);
 
-        //return dateFormattedShort;
     }
 
 
@@ -50,8 +43,7 @@ public class DateUtil {
 
     public static String dateToString(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        String dateString;
-        return dateString = sdf.format(date);
+        return sdf.format(date);
     }
 
     public static Date getCurrentDate() {

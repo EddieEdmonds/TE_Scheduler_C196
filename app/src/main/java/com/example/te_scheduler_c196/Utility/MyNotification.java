@@ -1,8 +1,5 @@
 package com.example.te_scheduler_c196.Utility;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 public class MyNotification implements Serializable {

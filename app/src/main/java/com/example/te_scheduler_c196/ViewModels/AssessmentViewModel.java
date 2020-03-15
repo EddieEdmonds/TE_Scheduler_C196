@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.te_scheduler_c196.DB_Entities.Assessment;
-import com.example.te_scheduler_c196.DB_Entities.Course;
 import com.example.te_scheduler_c196.Database.AppRepository;
 
 import java.util.List;
@@ -35,7 +34,4 @@ public class AssessmentViewModel extends AndroidViewModel {
         return allAssessments;
     }
 
-    public LiveData<List<Assessment>> getAllAssessmentsByCourse(int courseId){
-        return repository.getAllAssessmentsByCourse(courseId);
-    }
 }

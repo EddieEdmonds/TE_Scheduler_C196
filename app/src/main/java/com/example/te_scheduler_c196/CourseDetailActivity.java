@@ -36,7 +36,6 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import static com.example.te_scheduler_c196.CourseActivity.EDIT_COURSE_REQUEST;
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_END_DATE;
@@ -46,15 +45,20 @@ import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_START
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_STATUS;
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_TERM_ID;
 import static com.example.te_scheduler_c196.CourseAddActivity.EXTRA_COURSE_TITLE;
-import static com.example.te_scheduler_c196.NoteAddActivity.EXTRA_NOTE_BODY;
-import static com.example.te_scheduler_c196.NoteAddActivity.EXTRA_NOTE_TITLE;
+import static com.example.te_scheduler_c196.MentorActivity.EDIT_MENTOR_REQUEST;
+import static com.example.te_scheduler_c196.NoteAddEditActivity.EXTRA_NOTE_BODY;
+import static com.example.te_scheduler_c196.NoteAddEditActivity.EXTRA_NOTE_ID;
+import static com.example.te_scheduler_c196.NoteAddEditActivity.EXTRA_NOTE_TITLE;
 
 public class CourseDetailActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final int ADD_NOTE_REQUEST = 5;
+    public static final int EDIT_NOTE_REQUEST = 10;
 
     private TextView tv_CourseStartDate, tv_CourseEndDate, tv_CourseStatus, tv_courseTerm, tv_CourseEditTitle;
     private int courseId, termId, mentorId;
+
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         //Check it against all mentors and get the name of the match. Display that name.
         int termId = courseData.getIntExtra(EXTRA_COURSE_TERM_ID, -1);
         final TermViewModel termViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
-        termViewModel.getTermByid(termId).observe(this, mentorList -> {
+        termViewModel.getTermById(termId).observe(this, mentorList -> {
             if (mentorList != null) {
                 for (Term t : mentorList) {
                     String termTitle = t.getTerm_title();
@@ -108,7 +112,23 @@ public class CourseDetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Mentor> mentorList) {
                 mentorAdapter.setMentorList(mentorList);
-//                mentorAdapter.notifyDataSetChanged();
+                mentorAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mentorAdapter.setOnMentorClickListener(new MentorAdapter.OnMentorClickListener(){
+            @Override
+            public void onMentorClick(Mentor mentor) {
+                Log.i(TAG, "do we get here?");
+                Intent intent = new Intent(CourseDetailActivity.this, MentorAddEditActivity.class);
+
+                intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_ID, mentor.getMentor_id());
+                intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_NAME, mentor.getMentor_name());
+                intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_PHONE, mentor.getMentor_phone());
+                intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_EMAIL, mentor.getMentor_email());
+                intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_ID, mentor.getMentor_id());
+
+                startActivityForResult(intent, EDIT_MENTOR_REQUEST);
             }
         });
 
@@ -124,19 +144,33 @@ public class CourseDetailActivity extends AppCompatActivity {
         final NoteViewModel noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         noteViewModel.getNotesByCourse(courseId).observe(this, noteAdapter::setNotes);
 
-        //This is to control the EFAB to open the NoteAddActivity
+        //This is to control the EFAB to open the NoteAddEditActivity
         ExtendedFloatingActionButton btnAddNote = findViewById(R.id.efab_add_note);
         btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CourseDetailActivity.this, NoteAddActivity.class);
+                Intent intent = new Intent(CourseDetailActivity.this, NoteAddEditActivity.class);
                 intent.putExtra(EXTRA_COURSE_ID, courseId);
                 startActivityForResult(intent, ADD_NOTE_REQUEST);
 
             }
         });
 
-        ///////////////////////////On swipe event for deleting a course in the TermEditActivity.//////////////////////////////
+        //Controls clicking on the Note item in the list to edit the Note.
+        noteAdapter.setOnNoteClickListener(new NoteAdapter.onNoteClickListener() {
+            @Override
+            public void onNoteClick(Note note) {
+                Intent intent = new Intent(CourseDetailActivity.this, NoteAddEditActivity.class);
+                intent.putExtra(EXTRA_NOTE_TITLE, note.getTitle());
+                intent.putExtra(EXTRA_NOTE_BODY, note.getNote_body());
+                intent.putExtra(EXTRA_NOTE_ID, note.getNote_id());
+                intent.putExtra(EXTRA_COURSE_ID, courseId);
+
+                startActivityForResult(intent, EDIT_NOTE_REQUEST);
+            }
+        });
+
+///////////////////////////On swipe event for deleting a course in the TermEditActivity.//////////////////////////////
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 0,
                 ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
@@ -151,13 +185,13 @@ public class CourseDetailActivity extends AppCompatActivity {
                 //We grab the note that we swiped on.
                 final Note swipedNote = noteAdapter.getNoteAt(viewHolder.getAdapterPosition());
 
-                //We pop a dialog letting users know that Notes and Assessments will be deleted as well.
+                //We pop a dialog letting users know that Notes and Noteessments will be deleted as well.
                 AlertDialog.Builder builder = new AlertDialog.Builder(viewHolder.itemView.getContext())
                         .setMessage("Delete this note?");
 
                 //If they click positive button: note, note, and assessments deleted
                 // Note deleted via the below deleteNote method.
-                // Notes and Assessments deleted through "on delete CASCADE" in the respective DAOs.
+                // Notes and Noteessments deleted through "on delete CASCADE" in the respective DAOs.
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int arg1) {
@@ -174,9 +208,12 @@ public class CourseDetailActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-                builder.show();
+                alertDialog = builder.show();
+                alertDialog.setCanceledOnTouchOutside(false);
             }
         }).attachToRecyclerView(rvNotesForCourse);
+
+
     }
 
     @Override
@@ -212,6 +249,7 @@ public class CourseDetailActivity extends AppCompatActivity {
             assert data != null;
             CourseViewModel courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
             NoteViewModel noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
+            MentorViewModel mentorViewModel = ViewModelProviders.of(this).get(MentorViewModel.class);
 
             Course course;
             Note note;
@@ -242,7 +280,6 @@ public class CourseDetailActivity extends AppCompatActivity {
                 rvMentorForCourse.setHasFixedSize(true);
                 final MentorAdapter mentorAdapter = new MentorAdapter();
                 rvMentorForCourse.setAdapter(mentorAdapter);
-                final MentorViewModel mentorViewModel = ViewModelProviders.of(this).get(MentorViewModel.class);
                 mentorViewModel.getMentorById(fk_courseMentorId).observe(this, mentorAdapter::setMentorList);
 
 
@@ -264,6 +301,21 @@ public class CourseDetailActivity extends AppCompatActivity {
                 String noteBody = data.getStringExtra(EXTRA_NOTE_BODY);
                 note = new Note(noteTitle, noteBody, courseId);
                 noteViewModel.insertNote(note);
+            }else if(requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK){
+                String noteTitle = data.getStringExtra(EXTRA_NOTE_TITLE);
+                String noteBody = data.getStringExtra(EXTRA_NOTE_BODY);
+                int noteId = data.getIntExtra(NoteAddEditActivity.EXTRA_NOTE_ID, -1);
+                note = new Note(noteTitle, noteBody, courseId);
+                note.setNote_id(noteId);
+                noteViewModel.updateNote(note);
+            }else if (requestCode==EDIT_MENTOR_REQUEST && resultCode==RESULT_OK){
+                String mentorName = data.getStringExtra(MentorAddEditActivity.EXTRA_MENTOR_NAME);
+                String mentorPhone = data.getStringExtra(MentorAddEditActivity.EXTRA_MENTOR_PHONE);
+                String mentorEmail = data.getStringExtra(MentorAddEditActivity.EXTRA_MENTOR_EMAIL);
+                int mentorId = data.getIntExtra(MentorAddEditActivity.EXTRA_MENTOR_ID, -1);
+                Mentor mentor = new Mentor(mentorName, mentorPhone, mentorEmail);
+                mentor.setMentor_id(mentorId);
+                mentorViewModel.updateMentor(mentor);
             }
             else {
                 Toast.makeText(this, "Course not saved!", Toast.LENGTH_SHORT).show();

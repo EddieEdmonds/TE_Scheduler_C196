@@ -1,27 +1,25 @@
 package com.example.te_scheduler_c196;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.te_scheduler_c196.Adapters.MentorAdapter;
 import com.example.te_scheduler_c196.DB_Entities.Mentor;
 import com.example.te_scheduler_c196.ViewModels.MentorViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
 
 public class MentorActivity extends AppCompatActivity{
     private static final String TAG = MentorActivity.class.getSimpleName();
@@ -30,6 +28,8 @@ public class MentorActivity extends AppCompatActivity{
     public static final int EDIT_MENTOR_REQUEST = 9;
 
     private MentorViewModel mentorViewModel;
+
+    private AlertDialog alertDialog;
 
 
     @Override
@@ -45,12 +45,7 @@ public class MentorActivity extends AppCompatActivity{
         mentorRecyclerView.setAdapter(mentorAdapter);
 
         mentorViewModel = ViewModelProviders.of(this).get(MentorViewModel.class);
-        mentorViewModel.getAllMentors().observe(this, new Observer<List<Mentor>>() {
-            @Override
-            public void onChanged(List<Mentor> mentorList) {
-                mentorAdapter.setMentorList(mentorList);
-            }
-        });
+        mentorViewModel.getAllMentors().observe(this, mentorAdapter::setMentorList);
 
         FloatingActionButton btnAddTerm = findViewById(R.id.btn_add_mentor);
         btnAddTerm.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +87,8 @@ public class MentorActivity extends AppCompatActivity{
                         dialog.cancel();
                     }
                 });
-                builder.show();
+                alertDialog = builder.show();
+                alertDialog.setCanceledOnTouchOutside(false);
             }
         }).attachToRecyclerView(mentorRecyclerView);
 
@@ -107,7 +103,7 @@ public class MentorActivity extends AppCompatActivity{
                 intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_PHONE, mentor.getMentor_phone());
                 intent.putExtra(MentorAddEditActivity.EXTRA_MENTOR_EMAIL, mentor.getMentor_email());
 
-                startActivity(intent);
+                startActivityForResult(intent, EDIT_MENTOR_REQUEST);
             }
         });
 
@@ -132,9 +128,12 @@ public class MentorActivity extends AppCompatActivity{
                 mentor.setMentor_id(mentorId);
                 mentorViewModel.updateMentor(mentor);
 
+            }else {
+                Toast.makeText(this, "Mentor not saved!", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 
 
 
